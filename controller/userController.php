@@ -1,5 +1,6 @@
 <?php
-include '../model/Kasir.php';
+include 'connection.php';
+include './model/Kasir.php';
 
 /**
  *
@@ -7,10 +8,11 @@ include '../model/Kasir.php';
 class userController
 {
 
-  function __construct(argument){}
+  function __construct(){
+
+  }
 
   function getKasir(){
-
   }
 
   function addKasir(){
@@ -25,8 +27,18 @@ class userController
 
   }
 
-  function Login(){
+  function login($username,$password){
+    $sql = "select * from kasir where username = '".$username."' and password = md5('".$password."')";
+    $result = $GLOBALS['mysqli']->query($sql);
 
+    if(mysqli_num_rows($result)==1){
+      $data = mysqli_fetch_object($result);
+    }else{
+      $data = false;
+    }
+    $GLOBALS['mysqli']->close();
+
+    return $data;
   }
 
   function checkAdmin(){

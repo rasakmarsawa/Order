@@ -1,4 +1,20 @@
 <!DOCTYPE html>
+<?php
+include "controller/userController.php";
+$user = new userController();
+
+if (isset($_POST['submit'])) {
+  $data = $user->login($_POST['username'],$_POST['password']);
+  if($data==false){
+    //Login False
+    echo "here";
+  }else{
+    //Login True
+    $_SESSION = $data;
+    echo $_SESSION->password;
+  }
+}
+?>
 <html lang="en" class="h-100">
 
 <head>
@@ -22,14 +38,14 @@
                             <div class="col-xl-12">
                                 <div class="auth-form">
                                     <h4 class="text-center mb-4">Login</h4>
-                                    <form action="index.html">
+                                    <form method="POST">
                                         <div class="form-group">
                                             <label><strong>Username</strong></label>
-                                            <input type="email" class="form-control" placeholder="username">
+                                            <input name="username" type="username" class="form-control" placeholder="username">
                                         </div>
                                         <div class="form-group">
                                             <label><strong>Password</strong></label>
-                                            <input type="password" class="form-control" placeholder="password">
+                                            <input name="password" type="password" class="form-control" placeholder="password">
                                         </div>
                                         <!-- <div class="form-row d-flex justify-content-between mt-4 mb-2">
                                             <div class="form-group">
@@ -43,7 +59,7 @@
                                             </div>
                                         </div> -->
                                         <div class="text-center">
-                                            <button type="submit" class="btn btn-primary btn-block">Masuk</button>
+                                            <button name="submit" type="submit" class="btn btn-primary btn-block">Masuk</button>
                                         </div>
                                     </form>
                                     <!-- <div class="new-account mt-3">
