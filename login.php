@@ -11,7 +11,10 @@ if (isset($_POST['submit'])) {
   }
 }
 
-$session->redirect('index.php','?login=false');
+if ($session->check()==true) {
+  $session->redirect('index.php');
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,7 +24,7 @@ $session->redirect('index.php','?login=false');
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Focus Admin: Widget</title>
+    <title>Trisha</title>
 
     <!-- ================= Favicon ================== -->
     <!-- Standard -->

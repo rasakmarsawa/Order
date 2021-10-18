@@ -32,10 +32,8 @@ class session
     }
   }
 
-  function redirect($page,$fpage){
-    if($this->check()==true){
+  function redirect($page){
       header('Location:'.$page);
-    }
   }
 }
 
