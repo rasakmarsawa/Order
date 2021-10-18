@@ -1,5 +1,6 @@
 <?php
 include 'connection.php';
+include 'session.php';
 include './model/Kasir.php';
 
 /**
@@ -32,7 +33,8 @@ class userController
     $result = $GLOBALS['mysqli']->query($sql);
 
     if(mysqli_num_rows($result)==1){
-      $data = mysqli_fetch_object($result);
+      $_SESSION = mysqli_fetch_assoc($result);
+      $data = true;
     }else{
       $data = false;
     }
