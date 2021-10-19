@@ -46,8 +46,8 @@
                     </div>
                     <li class="label">Menu</li>
                     <li><a href="index.php"><i class="ti-home"></i> Beranda </a></li>
-                    <li><a href="barang.php"><i class="ti-truck"></i> Barang </a></li>
-                    <li><a href="#"><i class="ti-user"></i> Kasir </a></li>
+                    <li><a href="listBarang.php"><i class="ti-truck"></i> Barang </a></li>
+                    <li><a href="listKasir.php"><i class="ti-user"></i> Kasir </a></li>
                     <li><a href="#"><i class="ti-shopping-cart-full"></i> Pesanan </a></li>
                     <li><a href="#"><i class="ti-shopping-cart"></i> Antrian </a></li>
                     <li><a href="#"><i class="ti-wallet"></i> Topup </a></li>

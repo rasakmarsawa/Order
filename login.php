@@ -1,4 +1,5 @@
 <?php
+include 'controller/session.php';
 include "controller/userController.php";
 
 $user = new userController();

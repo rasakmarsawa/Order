@@ -1,7 +1,4 @@
 <?php
-include 'connection.php';
-include 'session.php';
-
 /**
  *
  */
@@ -40,7 +37,7 @@ class barangController
     if (mysqli_num_rows($result)==1) {
       $data = mysqli_fetch_assoc($result);
     }else{
-      $data = 0;
+      $data = null;
     }
 
     return $data;
@@ -54,7 +51,7 @@ class barangController
   }
 
   function updateBarang($post){
-    $sql = "update barang set nama_barang=".$post['nama_barang']." , harga=".$post['harga']." , where id_barang=".$post['id'];
+    $sql = "update barang set nama_barang='".$post['nama_barang']."' , harga=".$post['harga']." where id_barang=".$post['id'];
     $result = $GLOBALS['mysqli']->query($sql);
 
     return $result;

@@ -1,4 +1,5 @@
 <?php
+include 'connection.php';
 session_start();
 /**
  *
@@ -34,6 +35,16 @@ class session
 
   function redirect($page){
       header('Location:'.$page);
+  }
+
+  function emptyCheck($arr,$exception){
+    $check = true;
+    foreach ($arr as $key => $value) {
+      if ($value=='' && !in_array($key,$exception)) {
+        $check = false;
+      }
+    }
+    return $check;
   }
 }
 

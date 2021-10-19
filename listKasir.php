@@ -1,23 +1,15 @@
 <?php
 include 'controller/session.php';
-include 'controller/barangController.php';
+include 'controller/kasirController.php';
 
 $session = new session();
-$barang = new barangController();
+$kasir = new kasirController();
 
 if ($session->check()==false) {
   $session->redirect('login.php');
 }
 
-if (isset($_GET['delete'])) {
-  $result = $barang->deleteBarangById($_GET['delete']);
-  if ($result==true) {
-    $session->redirect('listBarang.php?delete');
-  }
-}
-
-$data = $barang->getBarangById($_GET['id']);
-
+$arr = $kasir->getKasir();
 ?>
 
 <?php include 'include/head.php' ?>
@@ -30,33 +22,27 @@ $data = $barang->getBarangById($_GET['id']);
                     <div class="row">
                         <!-- /# column -->
                             <div class="card col-lg-12">
-                              <div class="row">
                                 <div class="card-title mb-2">
-                                    <h4>Detail Barang </h4>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-lg-6">
-                                    <h4 class="card-title"><?php echo $data['nama_barang'] ?></h4>
-                                    <h6 class="card-subtitle"><?php echo "Rp.".$data['harga'] ?></h6>
-                                </div>
-                                <div class="col-lg-6">
+                                    <h4>List Kasir </h4>
                                     <div class="float-right">
-                                      <a type="button" class="btn btn-danger mr-1" href="?delete=<?php echo $data['id_barang'] ?>">Hapus</a>
-                                    </div>
-                                    <div class="float-right">
-                                      <a type="button" class="btn btn-primary mr-1" href="ubahBarang.php?id=<?php echo $data['id_barang'] ?>">Ubah</a>
+                                        <a type="button" class="btn btn-primary" href="tambahKasir.php">Tambah</a>
                                     </div>
                                 </div>
-                              </div>
-
                                 <div class="card-body">
-                                  <?php if (isset($_GET['update'])): ?>
+                                  <?php if (isset($_GET['add'])): ?>
                                     <div class="alert alert-success alert-dismissible fade show">
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                       <span aria-hidden="true">×</span>
                                     </button>
-                                      Barang berhasil diubah.
+                                      Kasir baru berhasil ditambahkan.
+                                    </div>
+                                  <?php endif; ?>
+                                  <?php if (isset($_GET['delete'])): ?>
+                                    <div class="alert alert-success alert-dismissible fade show">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                      <span aria-hidden="true">×</span>
+                                    </button>
+                                      Kasir berhasil dihapus.
                                     </div>
                                   <?php endif; ?>
                                     <div class="table-responsive">
@@ -64,24 +50,30 @@ $data = $barang->getBarangById($_GET['id']);
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
-                                                    <th>Nama Barang</th>
-                                                    <th>Harga</th>
+                                                    <th>Username</th>
+                                                    <th>Nama Kasir</th>
+                                                    <th>Role</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
 
-                                              <!-- <?php
+                                              <?php
                                               $i=1;
                                               foreach ($arr as $key => $value): ?>
                                                 <tr>
                                                     <th scope="row"><?php echo $i ?></th>
-                                                    <td><?php echo $value['nama_barang'] ?></td>
-                                                    <td><?php echo $value['harga'] ?></td>
-                                                    <td><center><a type="button" class="btn btn-primary" href="detailBarang.php?id=<?php echo $value['id_barang'] ?>">Detail</a></center></td>
+                                                    <td><?php echo $value['username'] ?></td>
+                                                    <td><?php echo $value['nama_kasir'] ?></td>
+                                                    <td><?php if ($value['admin']==1): ?>
+                                                        <span class="badge badge-primary">Admin</span>
+                                                      <?php else: ?>
+                                                        <span class="badge badge-success">Kasir</span>
+                                                    <?php endif; ?></td>
+                                                    <td><center><a type="button" class="btn btn-primary" href="detailKasir.php?id=<?php echo $value['username'] ?>">Detail</a></center></td>
                                                 </tr>
                                               <?php $i++;
-                                            endforeach; ?> -->
+                                            endforeach; ?>
                                             </tbody>
                                         </table>
                                     </div>

@@ -1,14 +1,23 @@
 <?php
-include 'controller/barangController.php';
+include 'controller/session.php';
+include 'controller/kasirController.php';
 
 $session = new session();
-$barang = new barangController();
+$kasir = new kasirController();
 
 if ($session->check()==false) {
   $session->redirect('login.php');
 }
 
-$arr = $barang->getBarang();
+if (isset($_GET['delete'])) {
+  $result = $kasir->deleteKasirById($_GET['delete']);
+  if ($result==true) {
+    $session->redirect('listKasir.php?delete');
+  }
+}
+
+$data = $kasir->getKasirById($_GET['id']);
+
 ?>
 
 <?php include 'include/head.php' ?>
@@ -21,27 +30,35 @@ $arr = $barang->getBarang();
                     <div class="row">
                         <!-- /# column -->
                             <div class="card col-lg-12">
+                              <div class="row">
                                 <div class="card-title mb-2">
-                                    <h4>List Barang </h4>
-                                    <div class="float-right">
-                                        <a type="button" class="btn btn-primary" href="newBarang.php">Tambah</a>
-                                    </div>
+                                    <h4>Detail Kasir </h4>
                                 </div>
-                                <div class="card-body">
-                                  <?php if (isset($_GET['add'])): ?>
-                                    <div class="alert alert-success alert-dismissible fade show">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                      <span aria-hidden="true">×</span>
-                                    </button>
-                                      Barang baru berhasil ditambahkan.
+                              </div>
+                              <div class="row">
+                                <div class="col-lg-6">
+                                    <h4 class="card-title"><?php echo $data['nama_kasir'] ?></h4>
+                                    <h6 class="card-subtitle"><?php echo $data['username'] ?></h6>
+                                </div>
+                                <div class="col-lg-6">
+                                  <?php if ($_SESSION['username']!=$_GET['id'] && $_GET['id']!='admin'): ?>
+                                    <div class="float-right">
+                                      <a type="button" class="btn btn-danger mr-1" href="?delete=<?php echo $data['username'] ?>">Hapus</a>
                                     </div>
                                   <?php endif; ?>
-                                  <?php if (isset($_GET['delete'])): ?>
+                                    <div class="float-right">
+                                      <a type="button" class="btn btn-primary mr-1" href="ubahKasir.php?id=<?php echo $data['username'] ?>">Ubah</a>
+                                    </div>
+                                </div>
+                              </div>
+
+                                <div class="card-body">
+                                  <?php if (isset($_GET['update'])): ?>
                                     <div class="alert alert-success alert-dismissible fade show">
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                       <span aria-hidden="true">×</span>
                                     </button>
-                                      Barang berhasil dihapus.
+                                      Data kasir berhasil diubah.
                                     </div>
                                   <?php endif; ?>
                                     <div class="table-responsive">
@@ -56,17 +73,17 @@ $arr = $barang->getBarang();
                                             </thead>
                                             <tbody>
 
-                                              <?php
+                                              <!-- <?php
                                               $i=1;
                                               foreach ($arr as $key => $value): ?>
                                                 <tr>
                                                     <th scope="row"><?php echo $i ?></th>
                                                     <td><?php echo $value['nama_barang'] ?></td>
-                                                    <td><?php echo "Rp. ".$value['harga'] ?></td>
+                                                    <td><?php echo $value['harga'] ?></td>
                                                     <td><center><a type="button" class="btn btn-primary" href="detailBarang.php?id=<?php echo $value['id_barang'] ?>">Detail</a></center></td>
                                                 </tr>
                                               <?php $i++;
-                                            endforeach; ?>
+                                            endforeach; ?> -->
                                             </tbody>
                                         </table>
                                     </div>

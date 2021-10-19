@@ -1,8 +1,4 @@
 <?php
-include 'connection.php';
-include 'session.php';
-include './model/Kasir.php';
-
 /**
  *
  */

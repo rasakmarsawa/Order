@@ -1,17 +1,16 @@
 <?php
+include 'controller/session.php';
 include 'controller/barangController.php';
 
 $session = new session();
 $barang = new barangController();
 
-$data = $barang->getBarangById($_GET['id']);
-
 if (isset($_POST['submit'])) {
-  $result = $barang->updateBarang($_POST);
+  $result = $barang->addBarang($_POST['nama'],$_POST['harga']);
   if ($result) {
-    $session->redirect('detailBarang.php?id='.$_GET['id'].'&update');
+    $session->redirect('listBarang.php?add');
   }else{
-    $session->redirect('detailBarang.php?id='.$_GET['id'].'&failupdate');
+    $session->redirect('?fail');
   }
 }
 
@@ -47,11 +46,11 @@ if ($session->check()==false) {
                                         <form method="post">
                                             <div class="form-group">
                                                 <label>Nama Barang</label>
-                                                <input name="nama" type="nama" class="form-control" placeholder="Nama Barang" maxlength="50" value="<?php echo $data['nama_barang'] ?>">
+                                                <input name="nama" type="nama" class="form-control" placeholder="Nama Barang" maxlength="50">
                                             </div>
                                             <div class="form-group">
                                                 <label>Harga</label>
-                                                <input name="harga" type="harga" class="form-control" placeholder="Harga" maxlength="11" value="<?php echo $data['harga'] ?>">
+                                                <input name="harga" type="harga" class="form-control" placeholder="Harga" maxlength="11">
                                             </div>
                                             <button name="submit" type="submit" class="btn btn-default">Submit</button>
                                         </form>
