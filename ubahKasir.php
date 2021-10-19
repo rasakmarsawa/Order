@@ -62,7 +62,7 @@ if ($session->check()==false) {
                                         <form method="post">
                                             <div class="form-group">
                                                 <label>Nama Kasir</label>
-                                                <input name="nama_kasir" class="form-control" placeholder="Nama Barang" maxlength="50" value="<?php echo $data['nama_kasir'] ?>">
+                                                <input name="nama_kasir" class="form-control" placeholder="Nama Kasir" maxlength="50" value="<?php echo $data['nama_kasir'] ?>">
                                             </div>
                                             <div class="form-group">
                                                 <label>Password</label>

@@ -50,7 +50,7 @@
                     <li><a href="listKasir.php"><i class="ti-user"></i> Kasir </a></li>
                     <li><a href="#"><i class="ti-shopping-cart-full"></i> Pesanan </a></li>
                     <li><a href="#"><i class="ti-shopping-cart"></i> Antrian </a></li>
-                    <li><a href="#"><i class="ti-wallet"></i> Topup </a></li>
+                    <li><a href="topup.php"><i class="ti-wallet"></i> Topup </a></li>
                     <li><a href="index.php?logout"><i class="ti-close"></i> Logout</a></li>
                 </ul>
             </div>
