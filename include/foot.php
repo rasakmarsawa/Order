@@ -20,6 +20,12 @@
 <script src="assets/js/lib/data-table/buttons.print.min.js"></script>
 <script src="assets/js/lib/data-table/buttons.colVis.min.js"></script>
 <script src="assets/js/lib/data-table/datatables-init.js"></script>
+
+<script type="text/javascript">
+  if (document.getElementById('row-select_wrapper')) {
+      document.getElementById('row-select_wrapper').childNodes[1].setAttribute('class','col-lg-12');
+  }  
+</script>
 </body>
 
 </html>
