@@ -17,6 +17,20 @@ class topupController
 
     return $result;
   }
+
+  function getTopupByKasir($id){
+    $sql = "select * from topup inner join pelanggan on topup.id_pelanggan = pelanggan.username where id_kasir='".$id."'";
+    $result = $GLOBALS['mysqli']->query($sql);
+
+    $arr = array();
+    $i=0;
+    while ($data = mysqli_fetch_assoc($result)) {
+      $arr[$i]=$data;
+      $i++;
+    }
+
+    return $arr;
+  }
 }
 
 ?>

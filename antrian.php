@@ -12,6 +12,10 @@ if ($session->check()==false) {
   $session->redirect('login.php');
 }
 
+if ($session->checkAdmin()==true) {
+  $session->redirect('index.php');
+}
+
 if (isset($_POST['submit'])) {
   if ($_POST['submit']==1) {
     //antrian ditutup

@@ -23,8 +23,8 @@ class session
   }
 
   function checkAdmin(){
-    if(this.check()==true){
-      if($_SESSION->admin==1){
+    if($this->check()==true){
+      if($_SESSION['admin']==1){
         $result = true;
       }else{
         $result = false;

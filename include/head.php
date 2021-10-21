@@ -46,11 +46,14 @@
                     </div>
                     <li class="label">Menu</li>
                     <li><a href="index.php"><i class="ti-home"></i> Beranda </a></li>
-                    <li><a href="listBarang.php"><i class="ti-truck"></i> Barang </a></li>
-                    <li><a href="listKasir.php"><i class="ti-user"></i> Kasir </a></li>
-                    <li><a href="listPesanan.php"><i class="ti-shopping-cart-full"></i> Pesanan </a></li>
-                    <li><a href="antrian.php"><i class="ti-shopping-cart"></i> Antrian </a></li>
-                    <li><a href="topup.php"><i class="ti-wallet"></i> Topup </a></li>
+                    <?php if ($_SESSION['admin']==1): ?>
+                      <li><a href="listBarang.php"><i class="ti-truck"></i> Barang </a></li>
+                      <li><a href="listKasir.php"><i class="ti-user"></i> Kasir </a></li>
+                      <li><a href="listPesanan.php"><i class="ti-shopping-cart-full"></i> Pesanan </a></li>
+                    <?php else: ?>
+                      <li><a href="antrian.php"><i class="ti-shopping-cart"></i> Antrian </a></li>
+                      <li><a href="topup.php"><i class="ti-wallet"></i> Topup </a></li>
+                    <?php endif; ?>
                     <li><a href="index.php?logout"><i class="ti-close"></i> Logout</a></li>
                 </ul>
             </div>

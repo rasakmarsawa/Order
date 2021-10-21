@@ -1,12 +1,18 @@
 <?php
 include 'controller/session.php';
 include 'controller/kasirController.php';
+include 'controller/topupController.php';
 
 $session = new session();
 $kasir = new kasirController();
+$topup = new topupController();
 
 if ($session->check()==false) {
   $session->redirect('login.php');
+}
+
+if ($session->checkAdmin()==false) {
+  $session->redirect('index.php');
 }
 
 if (isset($_GET['delete'])) {
@@ -17,6 +23,7 @@ if (isset($_GET['delete'])) {
 }
 
 $data = $kasir->getKasirById($_GET['id']);
+$data1 = $topup->getTopupByKasir($_GET['id']);
 
 ?>
 
@@ -27,7 +34,6 @@ $data = $kasir->getKasirById($_GET['id']);
             <div class="container-fluid">
                 <!-- /# row -->
                 <section id="main-content">
-                    <div class="row">
                         <!-- /# column -->
                             <div class="card col-lg-12">
                               <div class="row">
@@ -65,25 +71,20 @@ $data = $kasir->getKasirById($_GET['id']);
                                         <table class="table table-bordered">
                                             <thead>
                                                 <tr>
-                                                    <th>#</th>
-                                                    <th>Nama Barang</th>
-                                                    <th>Harga</th>
-                                                    <th></th>
+                                                    <th>Tanggal</th>
+                                                    <th>Pembeli</th>
+                                                    <th>Jumlah Topup</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
 
-                                              <!-- <?php
-                                              $i=1;
-                                              foreach ($arr as $key => $value): ?>
+                                              <?php foreach ($data1 as $key => $value): ?>
                                                 <tr>
-                                                    <th scope="row"><?php echo $i ?></th>
-                                                    <td><?php echo $value['nama_barang'] ?></td>
-                                                    <td><?php echo $value['harga'] ?></td>
-                                                    <td><center><a type="button" class="btn btn-primary" href="detailBarang.php?id=<?php echo $value['id_barang'] ?>">Detail</a></center></td>
+                                                    <td><?php echo $value['tanggal'] ?></td>
+                                                    <td><?php echo $value['nama_pelanggan'] ?></td>
+                                                    <td><?php echo $value['jumlah_topup'] ?></td>
                                                 </tr>
-                                              <?php $i++;
-                                            endforeach; ?> -->
+                                              <?php endforeach; ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -92,7 +93,6 @@ $data = $kasir->getKasirById($_GET['id']);
                             <!-- /# card -->
                         </div>
                         <!-- /# column -->
-                    </div>
                     <!-- /# row -->
 
                     <div class="row">

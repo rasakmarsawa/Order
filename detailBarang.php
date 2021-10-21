@@ -9,6 +9,10 @@ if ($session->check()==false) {
   $session->redirect('login.php');
 }
 
+if ($session->checkAdmin()==false) {
+  $session->redirect('index.php');
+}
+
 if (isset($_GET['delete'])) {
   $result = $barang->deleteBarangById($_GET['delete']);
   if ($result==true) {
@@ -17,7 +21,7 @@ if (isset($_GET['delete'])) {
 }
 
 $data = $barang->getBarangById($_GET['id']);
-
+$detail = $barang->getDetailBarang($_GET['id']);
 ?>
 
 <?php include 'include/head.php' ?>
@@ -49,7 +53,11 @@ $data = $barang->getBarangById($_GET['id']);
                                     </div>
                                 </div>
                               </div>
-
+                              <div class="row">
+                                <div class="card-title mb-2">
+                                    <h4>Penjualan Barang</h4>
+                                </div>
+                              </div>
                                 <div class="card-body">
                                   <?php if (isset($_GET['update'])): ?>
                                     <div class="alert alert-success alert-dismissible fade show">
@@ -59,31 +67,34 @@ $data = $barang->getBarangById($_GET['id']);
                                       Barang berhasil diubah.
                                     </div>
                                   <?php endif; ?>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Nama Barang</th>
-                                                    <th>Harga</th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
+                                    <div class="bootstrap-data-table-panel">
+                                        <div class="table-responsive">
+                                            <table id="row-select" class="display table table-borderd table-hover">
+                                              <thead>
+                                                  <tr>
+                                                      <th>Tanggal</th>
+                                                      <th>Pembeli</th>
+                                                      <th>Jumlah</th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody>
 
-                                              <!-- <?php
-                                              $i=1;
-                                              foreach ($arr as $key => $value): ?>
+                                                <?php foreach ($detail as $key => $value): ?>
+                                                  <tr>
+                                                      <td><?php echo $value['tanggal'] ?></td>
+                                                      <td><?php echo $value['nama_pelanggan'] ?></td>
+                                                      <td><?php echo $value['jumlah_barang'] ?></td>
+                                                  </tr>
+                                                <?php endforeach; ?>
+                                              </tbody>
+                                              <tfoot>
                                                 <tr>
-                                                    <th scope="row"><?php echo $i ?></th>
-                                                    <td><?php echo $value['nama_barang'] ?></td>
-                                                    <td><?php echo $value['harga'] ?></td>
-                                                    <td><center><a type="button" class="btn btn-primary" href="detailBarang.php?id=<?php echo $value['id_barang'] ?>">Detail</a></center></td>
+                                                  <th>Tanggal</th>
+                                                  <th>Pembeli</th>
                                                 </tr>
-                                              <?php $i++;
-                                            endforeach; ?> -->
-                                            </tbody>
-                                        </table>
+                                              </tfoot>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

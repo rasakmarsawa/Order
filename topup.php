@@ -10,6 +10,10 @@ if ($session->check()==false) {
 if (isset($_POST['submit'])) {
   $session->redirect('detailPelanggan.php?id='.$_POST['username']);
 }
+
+if ($session->checkAdmin()==true) {
+  $session->redirect('index.php');
+}
 ?>
 
 <?php include 'include/head.php' ?>

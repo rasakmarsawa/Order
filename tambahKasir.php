@@ -22,6 +22,10 @@ if (isset($_POST['submit'])) {
 if ($session->check()==false) {
   $session->redirect('login.php');
 }
+
+if ($session->checkAdmin()==false) {
+  $session->redirect('index.php');
+}
 ?>
 
 <?php include 'include/head.php' ?>

@@ -1,7 +1,11 @@
 <?php
 include 'controller/session.php';
+include 'controller/pesananController.php';
+include 'controller/barangController.php';
 
 $session = new session();
+$pesanan = new pesananController();
+$barang = new barangController();
 
 if ($session->check()==false) {
   $session->redirect('login.php');
@@ -11,6 +15,9 @@ if(isset($_GET['logout'])){
   session_destroy();
   $session->redirect('login.php');
 }
+
+$data_barang = $barang->getBarangSaleToday();
+$data_pesanan = count($pesanan->getPesananToday());
 ?>
 
 <?php include 'include/head.php' ?>
@@ -30,7 +37,7 @@ if(isset($_GET['logout'])){
                             <div class="stat-content">
                               <div class="text-left dib">
                                 <div class="stat-heading">Penjualan Harian</div>
-                                <div class="stat-text">Total: 765</div>
+                                <div class="stat-text"><?php echo $data_pesanan; ?> Pesanan</div>
                               </div>
                             </div>
                           </div>
@@ -41,120 +48,24 @@ if(isset($_GET['logout'])){
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-title pr">
-                                    <h4>All Exam Resul</h4>
+                                    <h4>Jumlah Barang Terjual Hari Ini</h4>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <table class="table student-data-table m-t-20">
                                             <thead>
                                                 <tr>
-                                                    <th><label><input type="checkbox" value=""></label>Exam Name</th>
-                                                    <th>Subject</th>
-                                                    <th>Grade Point</th>
-                                                    <th>Percent Form</th>
-                                                    <th>Percent Upto</th>
-                                                    <th>Date</th>
+                                                    <th>Nama Barang</th>
+                                                    <th>Jumlah Terjual Hari Ini</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                              <?php foreach ($data_barang as $key => $value): ?>
                                                 <tr>
-                                                    <td>Class Test</td>
-                                                    <td>Mathmatics</td>
-                                                    <td>
-                                                        4.00
-                                                    </td>
-                                                    <td>
-                                                        95.00
-                                                    </td>
-                                                    <td>
-                                                        100
-                                                    </td>
-                                                    <td>20/04/2017</td>
+                                                  <td><?php echo $value['nama_barang'] ?></td>
+                                                  <td><?php echo $value['jumlah_barang'] ?></td>
                                                 </tr>
-                                                <tr>
-                                                    <td>Class Test</td>
-                                                    <td>Mathmatics</td>
-                                                    <td>
-                                                        4.00
-                                                    </td>
-                                                    <td>
-                                                        95.00
-                                                    </td>
-                                                    <td>
-                                                        100
-                                                    </td>
-                                                    <td>20/04/2017</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Class Test</td>
-                                                    <td>English</td>
-                                                    <td>
-                                                        4.00
-                                                    </td>
-                                                    <td>
-                                                        95.00
-                                                    </td>
-                                                    <td>
-                                                        100
-                                                    </td>
-                                                    <td>20/04/2017</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Class Test</td>
-                                                    <td>Bangla</td>
-                                                    <td>
-                                                        4.00
-                                                    </td>
-                                                    <td>
-                                                        95.00
-                                                    </td>
-                                                    <td>
-                                                        100
-                                                    </td>
-                                                    <td>20/04/2017</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Class Test</td>
-                                                    <td>Mathmatics</td>
-                                                    <td>
-                                                        4.00
-                                                    </td>
-                                                    <td>
-                                                        95.00
-                                                    </td>
-                                                    <td>
-                                                        100
-                                                    </td>
-                                                    <td>20/04/2017</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Class Test</td>
-                                                    <td>English</td>
-                                                    <td>
-                                                        4.00
-                                                    </td>
-                                                    <td>
-                                                        95.00
-                                                    </td>
-                                                    <td>
-                                                        100
-                                                    </td>
-                                                    <td>20/04/2017</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Class Test</td>
-                                                    <td>Mathmatics</td>
-                                                    <td>
-                                                        4.00
-                                                    </td>
-                                                    <td>
-                                                        95.00
-                                                    </td>
-                                                    <td>
-                                                        100
-                                                    </td>
-                                                    <td>20/04/2017</td>
-                                                </tr>
+                                              <?php endforeach; ?>
                                             </tbody>
                                         </table>
                                     </div>

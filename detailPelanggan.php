@@ -11,6 +11,10 @@ if ($session->check()==false) {
   $session->redirect('login.php');
 }
 
+if ($session->checkAdmin()==true) {
+  $session->redirect('index.php');
+}
+
 if (isset($_POST['submit'])) {
   if ($session->emptyCheck($_POST,array('submit'))) {
     if ($_POST['jumlah_topup']>0) {
@@ -35,6 +39,8 @@ $data = $pelanggan->getPelangganById($_GET['id']);
 if (empty($data)) {
   $session->redirect('topup.php?notfound');
 }
+
+$activity = $pelanggan->getActivity($_GET['id']);
 ?>
 
 <?php include 'include/head.php' ?>
@@ -67,7 +73,11 @@ if (empty($data)) {
                                   </form>
                                 </div>
                               </div>
-
+                              <div class="row">
+                                <div class="card-title mb-2">
+                                    <h4>Aktifitas Pelanggan</h4>
+                                </div>
+                              </div>
                                 <div class="card-body">
                                   <?php if (isset($_GET['topup'])): ?>
                                     <div class="alert alert-success alert-dismissible fade show">
@@ -97,25 +107,26 @@ if (empty($data)) {
                                         <table class="table table-bordered">
                                             <thead>
                                                 <tr>
-                                                    <th>#</th>
-                                                    <th>Nama Barang</th>
-                                                    <th>Harga</th>
+                                                    <th>Tanggal</th>
+                                                    <th>Jenis</th>
+                                                    <th>Jumlah Harga</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
 
-                                              <!-- <?php
-                                              $i=1;
-                                              foreach ($arr as $key => $value): ?>
+                                              <?php foreach ($activity as $key => $value): ?>
                                                 <tr>
-                                                    <th scope="row"><?php echo $i ?></th>
-                                                    <td><?php echo $value['nama_barang'] ?></td>
-                                                    <td><?php echo $value['harga'] ?></td>
-                                                    <td><center><a type="button" class="btn btn-primary" href="detailBarang.php?id=<?php echo $value['id_barang'] ?>">Detail</a></center></td>
+                                                    <td><?php echo $value['tanggal'] ?></td>
+                                                    <td><?php echo $value['type'] ?></td>
+                                                    <td><?php echo $value['jumlah'] ?></td>
+                                                    <td>
+                                                      <?php if ($value['type']=='Pesanan'): ?>
+                                                        <center><a type="button" class="btn btn-primary" href="detailPesanan.php?tanggal=<?php echo $value['tanggal'] ?>&&no=<?php echo $value['no'] ?>">Detail</a></center>
+                                                      <?php endif; ?>
+                                                    </td>
                                                 </tr>
-                                              <?php $i++;
-                                            endforeach; ?> -->
+                                              <?php endforeach; ?>
                                             </tbody>
                                         </table>
                                     </div>

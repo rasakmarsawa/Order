@@ -86,6 +86,21 @@ class pesananController
     return $result;
   }
 
+  function getPesananToday(){
+    $sql = "select * from pesanan where tanggal = current_date and status = 4";
+
+    $result = $GLOBALS['mysqli']->query($sql);
+
+    $arr = array();
+    $i=0;
+    while ($data = mysqli_fetch_assoc($result)) {
+      $arr[$i]=$data;
+      $i++;
+    }
+
+    return $arr;
+  }
+
 }
 
 ?>

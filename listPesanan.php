@@ -9,6 +9,10 @@ if ($session->check()==false) {
   $session->redirect('login.php');
 }
 
+if ($session->checkAdmin()==false) {
+  $session->redirect('index.php');
+}
+
 $data = $pesanan->getPesanan();
 ?>
 
