@@ -38,6 +38,52 @@ class pelangganController
 
     return $arr;
   }
+
+  function register($arr){
+    $sql = "insert into pelanggan (username,nama_pelanggan,password,email,no_hp,saldo) values
+    ('".$arr['username']."',
+    '".$arr['nama_pelanggan']."',
+    md5('".$arr['password']."'),
+    '".$arr['email']."',
+    '".$arr['no_hp']."',
+    0)";
+
+    $result = $GLOBALS['mysqli']->query($sql);
+
+    return $result;
+  }
+
+  function login($arr){
+    $sql = "select * from pelanggan where username = '".$arr['username']."' and password = md5('".$arr['password']."')";
+    $result = $GLOBALS['mysqli']->query($sql);
+
+    $data = array();
+    if(mysqli_num_rows($result)==1){
+      $data['found'] = true;
+      $data['data'] = mysqli_fetch_assoc($result);
+    }else{
+      $data['found'] = false;
+    }
+    $GLOBALS['mysqli']->close();
+
+    return $data;
+  }
+
+  function getPelangganByUsername($username){
+    $sql = "select * from pelanggan where username = '".$username."'";
+    $result = $GLOBALS['mysqli']->query($sql);
+
+    $data = array();
+    if(mysqli_num_rows($result)==1){
+      $data['found'] = true;
+      $data['data'] = mysqli_fetch_assoc($result);
+    }else{
+      $data['found'] = false;
+    }
+    $GLOBALS['mysqli']->close();
+
+    return $data;
+  }
 }
 
 ?>

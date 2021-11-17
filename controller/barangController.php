@@ -86,6 +86,20 @@ class barangController
 
     return $arr;
   }
+
+  function api_getBarang(){
+    $data = $this->getBarang();
+    $result = array();
+
+    if (count($data)!=0) {
+      $result['empty']="false";
+      $result['data']=$data;
+    }else{
+      $result['empty']="true";
+    }
+
+    return $result;
+  }
 }
 
 ?>

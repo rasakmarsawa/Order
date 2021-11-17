@@ -14,7 +14,7 @@ class statusAntrianController
     if (mysqli_num_rows($result)==1) {
       $data = mysqli_fetch_assoc($result);
     }else{
-      $data = array('status'=>'0');
+      $data = array('status'=>'2');
     }
     return $data;
   }
@@ -35,6 +35,11 @@ class statusAntrianController
     $result = $GLOBALS['mysqli']->query($sql);
 
     return $result;
+  }
+
+  function api_getLastStatus(){
+    $data = $this->getLastStatus();
+    return $data;
   }
 }
 

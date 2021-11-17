@@ -28,7 +28,7 @@ class pesananController
     pelanggan.nama_pelanggan
     FROM pesanan
     INNER JOIN pelanggan ON pesanan.id_pelanggan = pelanggan.username
-    WHERE pesanan.status<4";
+    WHERE tanggal = current_date and pesanan.status<4";
     $result = $GLOBALS['mysqli']->query($sql);
 
     $arr = array();
@@ -99,6 +99,12 @@ class pesananController
     }
 
     return $arr;
+  }
+
+  function api_addPesanan($post){
+    $sql = "insert into pesanan(`tanggal`,`total_harga`,`id_pelanggan`) values ('".$post['tanggal']."',".$post['total_harga'].",'".$post['id_pelanggan']."')";
+    $result = $GLOBALS['mysqli']->query($sql);
+    return $result;
   }
 
 }

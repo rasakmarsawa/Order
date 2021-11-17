@@ -23,6 +23,16 @@ class detailPesananController
 
     return $arr;
   }
+
+  function api_addDetailPesanan($post){
+    $sql = "insert into detail_pesanan (`tanggal`,`id_barang`,`jumlah_barang`) values ";
+    foreach ($post['item'] as $key => $value) {
+      $sql = $sql."('".$post['tanggal']."',".$value['id_barang'].",".$value['jumlah_barang']."),";
+    }
+    $sql = substr($sql,0,strlen($sql)-1);
+    $result = $GLOBALS['mysqli']->query($sql);
+    return $result;
+  }
 }
 
 ?>

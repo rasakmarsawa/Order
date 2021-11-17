@@ -17,7 +17,7 @@ if ($session->checkAdmin()==true) {
 }
 
 if (isset($_POST['submit'])) {
-  if ($_POST['submit']==1) {
+  if ($_POST['submit']=='2') {
     //antrian ditutup
     $status->updateStatus(2,$_SESSION['username']);
   }else {
@@ -49,9 +49,9 @@ $stat = $status->getLastStatus();
                                               <label>Status Antrian : <?php echo $status->statusMeaning($stat['status']) ?></label>
                                           </div>
                                           <?php if ($stat['status']==1): ?>
-                                              <button name="submit" type="submit" class="btn btn-primary" value="tutup">Tutup</button>
+                                              <button name="submit" type="submit" class="btn btn-primary" value="2">Tutup</button>
                                             <?php else: ?>
-                                              <button name="submit" type="submit" class="btn btn-primary" value="buka">Buka</button>
+                                              <button name="submit" type="submit" class="btn btn-primary" value="1">Buka</button>
                                           <?php endif; ?>
                                         </center>
                                       </form>
