@@ -44,7 +44,8 @@ class pesananController
   function getPesananById($post){
     $sql = "SELECT
     pesanan.*,
-    pelanggan.nama_pelanggan
+    pelanggan.nama_pelanggan,
+    pelanggan.fcm_token
     FROM pesanan
     INNER JOIN pelanggan ON pesanan.id_pelanggan = pelanggan.username
     WHERE pesanan.tanggal = '".$post['tanggal']."' AND pesanan.no = ".$post['no'];
@@ -107,6 +108,61 @@ class pesananController
     return $result;
   }
 
+  function api_getAntrianByUser($post){
+    $sql = "SELECT * FROM pesanan WHERE id_pelanggan = '".$post['username']."' AND status < 4 order by tanggal desc, no desc";
+
+    $res = $GLOBALS['mysqli']->query($sql);
+
+    $arr = array();
+    $i=0;
+    while ($data = mysqli_fetch_assoc($res)) {
+      $arr[$i]=$data;
+      $i++;
+    }
+
+    if (count($arr)>0) {
+      $result['empty']=false;
+      $result['data']=$arr;
+    }else{
+      $result['empty']=true;
+    }
+
+    return $result;
+  }
+
+  function api_getHistoryByUser($post){
+    $start = $post['start'];
+    $end = $start + $post['length'] - 1;
+
+    $sql = "SELECT * FROM (SELECT ROW_NUMBER()
+      OVER(ORDER BY tanggal desc, no desc) AS row_no,
+      pesanan.* FROM pesanan WHERE id_pelanggan = '".$post['username']."' AND status > 3) AS A
+      WHERE row_no >= ".$start." AND row_no <= ".$end;
+
+    $res = $GLOBALS['mysqli']->query($sql);
+
+    $arr = array();
+    $i=0;
+    while ($data = mysqli_fetch_assoc($res)) {
+      $arr[$i]=$data;
+      $i++;
+    }
+
+    if (count($arr)>0) {
+      $result['empty']=false;
+      $result['data']=$arr;
+    }else{
+      $result['empty']=true;
+    }
+
+    return $result;
+  }
+
+  function api_cancel($post){
+    $sql = "update pesanan set pesanan.status = 5 where pesanan.tanggal = '".$post['tanggal']."' and pesanan.no = ".$post['no'];
+    $result = $GLOBALS['mysqli']->query($sql);
+    return $result;
+  }
 }
 
 ?>

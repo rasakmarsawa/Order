@@ -8,10 +8,11 @@ class detailPesananController
   function __construct(){}
 
   function getDetailPesananByPesanan($post){
-    $sql = "SELECT detail_pesanan.*, barang.nama_barang
+    $sql = "SELECT detail_pesanan.*, barang.nama_barang, barang.harga
     FROM detail_pesanan
     INNER JOIN barang ON detail_pesanan.id_barang = barang.id_barang
-    WHERE tanggal = '".$post['tanggal']."' AND no = ".$post['no'];
+    WHERE tanggal = '".$post['tanggal']."' AND no = ".$post['no']."
+    ORDER BY barang.nama_barang desc";
     $result = $GLOBALS['mysqli']->query($sql);
 
     $arr = array();
@@ -31,7 +32,22 @@ class detailPesananController
     }
     $sql = substr($sql,0,strlen($sql)-1);
     $result = $GLOBALS['mysqli']->query($sql);
-    return $result;
+    return $sql;
+  }
+
+  function api_getDetailPesananByPesanan($post){
+      $data = $this->getDetailPesananByPesanan($post);
+
+      $result = array();
+
+      if (count($data)!=0) {
+        $result['empty']=false;
+        $result['data']=$data;
+      }else{
+        $result['empty']=true;
+      }
+
+      return $result;
   }
 }
 

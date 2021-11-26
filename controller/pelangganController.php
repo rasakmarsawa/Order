@@ -64,8 +64,6 @@ class pelangganController
     }else{
       $data['found'] = false;
     }
-    $GLOBALS['mysqli']->close();
-
     return $data;
   }
 
@@ -83,6 +81,21 @@ class pelangganController
     $GLOBALS['mysqli']->close();
 
     return $data;
+  }
+
+  function updateToken($post){
+    $this->clearToken($post);
+
+    $sql = "update pelanggan set fcm_token = '".$post['fcm_token']."' where username = '".$post['username']."'";
+    $result = $GLOBALS['mysqli']->query($sql);
+    return $result;
+  }
+
+  function clearToken($post){
+    $sql = "update pelanggan set fcm_token = NULL where fcm_token = '".$post['fcm_token']."'";
+    $result = $GLOBALS['mysqli']->query($sql);
+
+    return $result;
   }
 }
 

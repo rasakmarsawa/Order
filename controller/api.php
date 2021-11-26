@@ -8,6 +8,7 @@
 	include 'pesananController.php';
 	include 'statusAntrianController.php';
 	include 'detailPesananController.php';
+	include 'notification.php';
 
 	//function validating all the paramters are available
 	//we will pass the required parameters to this function
@@ -26,7 +27,7 @@
 		//if parameters are missing
 		if(!$available){
 			$response = array();
-			$response['error'] = 'E1';
+			$response['error'] = 'E01';
 			$response['message'] = 'Parameters ' . substr($missingparams, 1, strlen($missingparams)) . ' missing';
 
 			//displaying error
@@ -37,88 +38,94 @@
 		}
 	}
 
-
-
-	//an array to display response
 	$response = array();
-
-	//if it is an api call
-	//that means a get parameter named api call is set in the URL
-	//and with this parameter we are concluding that it is an api call
 	if(isset($_GET['function'])){
 
 		switch($_GET['function']){
-
-			//the CREATE operation
-			//if the api call value is 'createhero'
-			//we will create a record in the database
 			case 'register':
+				$_POST = json_decode($_POST['data'],true);
 				isTheseParametersAvailable(array('username','nama_pelanggan','password','email','no_hp'));
 
-				//creating a new record in the database
         $pelanggan = new pelangganController();
 				$result = $pelanggan->register($_POST);
 
-
-				//if the record is created adding success to response
 				if($result){
-					$response['error'] = 'E0';
+					$response['error'] = 'E10';
 					$response['message'] = 'Proses Berhasil';
 
 				}else{
-					$response['error'] = 'E2';
+					$response['error'] = 'E11';
 					$response['message'] = 'Username sudah digunakan, Silahkan gunakan username lain.';
 				}
 
 			break;
-			case 'login':
+			case 'login'://1
+				$_POST = json_decode($_POST['data'],true);
 				isTheseParametersAvailable(array('username','password'));
 
 				$pelanggan = new pelangganController();
 				$result = $pelanggan->login($_POST);
 
 				if($result['found']){
-					$response['error'] = 'E0';
+					$response['error'] = 'E20';
 					$response['message'] = 'Proses Berhasil';
 					$response['data'] = $result['data'];
+
+					$token = $result['data']['fcm_token'];
+					if ($_POST!=$token && $token!=NULL) {
+						//force logout in other device
+						//send message to fcm
+						pushNotification(
+							$token,
+							"Login Akun",
+							"Akun anda telah login di perangkat lain",
+							"2",
+							null,
+							"LoginActivity"
+						);
+					}
+
+					//Input FCM_TOKEN
+					$response['token']=$pelanggan->updateToken($_POST);
 				}else {
-					$response['error'] = 'E3';
+					$response['error'] = 'E21';
 					$response['message'] = 'Data tidak sesuai';
 				}
 			break;
-			case 'reload_user_data':
+			case 'reload_user_data'://2
+				$_POST = json_decode($_POST['data'],true);
 				isTheseParametersAvailable(array('username'));
 
 				$pelanggan = new pelangganController();
 				$result = $pelanggan->getPelangganByUsername($_POST['username']);
 
 				if($result['found']){
-					$response['error'] = 'E0';
+					$response['error'] = 'E00';
 					$response['message'] = 'Proses Berhasil';
 					$response['data'] = $result['data'];
 				}else {
-					$response['error'] = 'E4';
+					$response['error'] = 'E31';
 					$response['message'] = 'Data tidak ditemukan';
 				}
 			break;
-			case 'get_barang':
+			case 'get_barang'://3
 				$barang = new BarangController();
 				$result = $barang->api_getBarang();
 				if ($result['empty']) {
-					$response['error'] = 'E4';
+					$response['error'] = 'E41';
 					$response['message'] = 'Data tidak ditemukan';
 				}else{
-					$response['error'] = 'E0';
+					$response['error'] = 'E40';
 					$response['message'] = 'Proses Berhasil';
 					$response['data'] = $result['data'];
 				}
 				break;
-			case 'get_status_antrian':
+			case 'get_status_antrian'://4
 				$status = new statusAntrianController();
 				$response['data'] = $status->api_getLastStatus();;
 				break;
 			//--add_pesanan--
-			case 'add_pesanan':
+			case 'add_pesanan'://5
 				$_POST = json_decode($_POST['data'],true);
 				$_POST['tanggal'] = date("Y-m-d",strtotime("now"));
 				$pesanan = new pesananController();
@@ -128,27 +135,93 @@
 					$detailPesanan = new detailPesananController();
 					$result2 = $detailPesanan->api_addDetailPesanan($_POST);
 					if ($result2) {
-						$response['error'] = 'E0';
+						$response['error'] = 'E50';
 						$response['message'] = 'Proses Sukses';
 					}else {
-						$response['error'] = 'E1';
+						$response['error'] = 'E52';
 						$response['message'] = 'Gagal Menambahkan Item Pesanan';
 					}
 				}else{
-					// addPesanan false
+					$response['error'] = 'E51';
+					$response['message'] = 'Gagal Menambahkan Pesanan';
 				}
 				break;
 			//--add_pesanan--
+			//--getAntrianByUser--
+			case 'get_antrian_by_user'://6
+				$_POST = json_decode($_POST['data'],true);
+				$pesanan = new pesananController();
+				$result = $pesanan->api_getAntrianByUser($_POST);
+				if ($result['empty']) {
+					$response['error'] = 'E61';
+					$response['message'] = 'Data tidak ditemukan';
+				}else{
+					$response['error'] = 'E60';
+					$response['message'] = 'Proses Berhasil';
+					$response['data'] = $result['data'];
+				}
+				break;
+			//--getAntrianByUser--
+			case 'get_detail_pesanan_by_pesanan'://7
+				$_POST = json_decode($_POST['data'],true);
+				$detail = new detailPesananController();
+				$result = $detail->api_getDetailPesananByPesanan($_POST);
+				if ($result['empty']) {
+					$response['error'] = 'E71';
+					$response['message'] = 'Data tidak ditemukan';
+				}else{
+					$response['error'] = 'E70';
+					$response['message'] = 'Proses Berhasil';
+					$response['data'] = $result['data'];
+				}
+				break;
+			case 'get_history'://8
+				$_POST = json_decode($_POST['data'],true);
+				$pesanan = new pesananController();
+				$result = $pesanan->api_getHistoryByUser($_POST);
+				if ($result['empty']) {
+					$response['error'] = 'E81';
+					$response['message'] = 'Data tidak ditemukan';
+				}else{
+					$response['error'] = 'E80';
+					$response['message'] = 'Proses Berhasil';
+					$response['data'] = $result['data'];
+					$response['test'] = $_POST;
+				}
+				break;
+			case 'cancel':
+				$_POST = json_decode($_POST['data'],true);
+				$pesanan = new pesananController();
+				$result = $pesanan->api_cancel($_POST);
+				if($result){
+					$response['error'] = 'E90';
+					$response['message'] = 'Proses Berhasil';
+				}else{
+					$response['error'] = 'E91';
+					$response['message'] = 'Cancel Fail';
+				}
+				break;
+			case 'logout':
+				$_POST = json_decode($_POST['data'],true);
+				$pelanggan = new pelangganController();
+				$result = $pelanggan->clearToken($_POST);
+				if($result){
+					$response['error'] = 'E100';
+					$response['message'] = 'Proses Berhasil';
+				}else{
+					$response['error'] = 'E101';
+					$response['message'] = 'Proses Gagal';
+				}
+			break;
       default :
-        $response['error'] = 'E99';
+        $response['error'] = 'E01';
         $response['message'] = 'Request Fungsi Invalid';
       break;
 		}
 
 	}else{
-		$response['error'] = '99';
+		$response['error'] = 'E01';
 		$response['message'] = 'Request Fungsi Invalid';
 	}
 
-	//displaying the response in json structure
 	echo json_encode($response);

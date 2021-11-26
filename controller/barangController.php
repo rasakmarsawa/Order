@@ -17,7 +17,7 @@ class barangController
   }
 
   function getBarang(){
-    $sql = "select * from barang";
+    $sql = "select * from barang order by nama_barang desc";
     $result = $GLOBALS['mysqli']->query($sql);
 
     $arr = array();
@@ -92,10 +92,10 @@ class barangController
     $result = array();
 
     if (count($data)!=0) {
-      $result['empty']="false";
+      $result['empty']=false;
       $result['data']=$data;
     }else{
-      $result['empty']="true";
+      $result['empty']=true;
     }
 
     return $result;

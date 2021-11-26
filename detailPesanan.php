@@ -2,6 +2,7 @@
 include 'controller/session.php';
 include 'controller/pesananController.php';
 include 'controller/detailPesananController.php';
+include 'controller/notification.php';
 
 $session = new session();
 $pesanan = new pesananController();
@@ -16,6 +17,17 @@ $data = $detail->getDetailPesananByPesanan($_GET);
 
 if (isset($_POST['submit'])) {
   if($pesanan->next($_GET)){
+      $data0['status'] = $data0['status']+1;
+
+      $res = pushNotification(
+        $data0['fcm_token'],
+        'Pesananmu',
+        'Status pesananmu saat ini adalah '.$pesanan->statusMeaning($data0['status']),
+        1,
+        $data0,
+        "DetailActivity"
+      );
+
       $session->redirect('detailPesanan.php?tanggal='.$_GET['tanggal'].'&&no='.$_GET['no'].'&&Next');
   }
 }
