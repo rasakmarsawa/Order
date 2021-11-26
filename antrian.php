@@ -2,10 +2,13 @@
 include 'controller/session.php';
 include 'controller/pesananController.php';
 include 'controller/statusAntrianController.php';
+include 'controller/pelangganController.php';
+include 'controller/notification.php';
 
 $session = new session();
 $pesanan = new pesananController();
 $status = new statusAntrianController();
+$pelanggan = new pelangganController();
 
 
 if ($session->check()==false) {
@@ -20,9 +23,28 @@ if (isset($_POST['submit'])) {
   if ($_POST['submit']=='2') {
     //antrian ditutup
     $status->updateStatus(2,$_SESSION['username']);
+    pushNotification(
+      0,
+      $pelanggan->getAllToken(),
+      "Restoran tutup",
+      "Udah ga bisa mesan makanan lagi deh",
+      3,
+      2,
+      null
+    );
   }else {
     //antrian dibuka
     $status->updateStatus(1,$_SESSION['username']);
+
+    pushNotification(
+      0,
+      $pelanggan->getAllToken(),
+      "Restoran buka",
+      "Udah bisa pesan makanan lagi nih",
+      3,
+      1,
+      null
+    );
   }
 }
 

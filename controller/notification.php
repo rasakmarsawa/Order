@@ -1,6 +1,6 @@
 <?php
 
-function pushNotification($to, $title, $msg, $type ,$data, $action){
+function pushNotification($count_to ,$to, $title, $msg, $type ,$data, $action){
   $url = 'https://fcm.googleapis.com/fcm/send';
   $apikey = 'AAAAxtmVDpE:APA91bGWra8XUsqkUl_al0xPEG-ME3F2gSVrQnlyNARjq9LuMmBP6k5fMynbURKKBSg04DB-yA3ZhBAuz4sP3pErKDFRaeEIwle6S8RtyOBtatOwG9gqQmh0_mHZhJnovjffloveoiEl';
 
@@ -26,8 +26,13 @@ function pushNotification($to, $title, $msg, $type ,$data, $action){
   $notifbody = [
     'notification' => $notifdata,
     'data' => $x,
-    'to' => $to
   ];
+
+  if ($count_to==1) {
+      $notifbody["to"] = $to;
+  }else{
+      $notifbody["registration_ids"] = $to;
+  }
 
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $url);

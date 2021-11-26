@@ -20,6 +20,7 @@ if (isset($_POST['submit'])) {
       $data0['status'] = $data0['status']+1;
 
       $res = pushNotification(
+        1,
         $data0['fcm_token'],
         'Pesananmu',
         'Status pesananmu saat ini adalah '.$pesanan->statusMeaning($data0['status']),

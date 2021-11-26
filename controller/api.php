@@ -76,6 +76,7 @@
 						//force logout in other device
 						//send message to fcm
 						pushNotification(
+							1,
 							$token,
 							"Login Akun",
 							"Akun anda telah login di perangkat lain",
@@ -103,6 +104,7 @@
 					$response['error'] = 'E00';
 					$response['message'] = 'Proses Berhasil';
 					$response['data'] = $result['data'];
+					$response['x'] = $pelanggan->getAllToken();
 				}else {
 					$response['error'] = 'E31';
 					$response['message'] = 'Data tidak ditemukan';

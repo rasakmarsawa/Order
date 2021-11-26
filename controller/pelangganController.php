@@ -78,8 +78,6 @@ class pelangganController
     }else{
       $data['found'] = false;
     }
-    $GLOBALS['mysqli']->close();
-
     return $data;
   }
 
@@ -96,6 +94,20 @@ class pelangganController
     $result = $GLOBALS['mysqli']->query($sql);
 
     return $result;
+  }
+
+  function getAllToken(){
+    $sql = "select fcm_token from pelanggan where fcm_token is not null";
+    $result = $GLOBALS['mysqli']->query($sql);
+
+    $arr = array();
+    $i=0;
+    while ($data = mysqli_fetch_assoc($result)) {
+      $arr[$i]=$data['fcm_token'];
+      $i++;
+    }
+
+    return $arr;
   }
 }
 
