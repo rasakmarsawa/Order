@@ -9,6 +9,7 @@
 	include 'statusAntrianController.php';
 	include 'detailPesananController.php';
 	include 'notification.php';
+	include 'email.php';
 
 	//function validating all the paramters are available
 	//we will pass the required parameters to this function
@@ -47,9 +48,14 @@
 				isTheseParametersAvailable(array('username','nama_pelanggan','password','email','no_hp'));
 
         $pelanggan = new pelangganController();
+				//clear unveryfied account
+				$pelanggan->clearUnveryfied();
+
 				$result = $pelanggan->register($_POST);
 
 				if($result){
+					$data = $pelanggan->getPelangganById($_POST['username']);
+					pushEmail($data['email'],$data['request_type'],$data['request_key']);
 					$response['error'] = 'E10';
 					$response['message'] = 'Proses Berhasil';
 
@@ -67,27 +73,33 @@
 				$result = $pelanggan->login($_POST);
 
 				if($result['found']){
-					$response['error'] = 'E20';
-					$response['message'] = 'Proses Berhasil';
-					$response['data'] = $result['data'];
+					$data = $result['data'];
+					if ($data['verify_status']==0) {
+						$response['error'] = 'E22';
+						$response['message'] = 'Belum verifikasi akun';
+					}else{
+						$response['error'] = 'E20';
+						$response['message'] = 'Proses Berhasil';
+						$response['data'] = $data;
 
-					$token = $result['data']['fcm_token'];
-					if ($_POST!=$token && $token!=NULL) {
-						//force logout in other device
-						//send message to fcm
-						pushNotification(
-							1,
-							$token,
-							"Login Akun",
-							"Akun anda telah login di perangkat lain",
-							"2",
-							null,
-							"LoginActivity"
-						);
+						$token = $result['data']['fcm_token'];
+						if ($_POST!=$token && $token!=NULL) {
+							//force logout in other device
+							//send message to fcm
+							pushNotification(
+								1,
+								$token,
+								"Login Akun",
+								"Akun anda telah login di perangkat lain",
+								"2",
+								null,
+								"LoginActivity"
+							);
+						}
+
+						//Input FCM_TOKEN
+						$response['token']=$pelanggan->updateToken($_POST);
 					}
-
-					//Input FCM_TOKEN
-					$response['token']=$pelanggan->updateToken($_POST);
 				}else {
 					$response['error'] = 'E21';
 					$response['message'] = 'Data tidak sesuai';
@@ -188,7 +200,6 @@
 					$response['error'] = 'E80';
 					$response['message'] = 'Proses Berhasil';
 					$response['data'] = $result['data'];
-					$response['test'] = $_POST;
 				}
 				break;
 			case 'cancel':
@@ -215,6 +226,38 @@
 					$response['message'] = 'Proses Gagal';
 				}
 			break;
+
+			case 'request':
+				$_POST = json_decode($_POST['data'],true);
+				$pelanggan = new pelangganController();
+				$result = $pelanggan->requestHandle($_POST);
+				if ($result['found']) {
+					if ($result['success']) {
+						$response['error'] = 'E110';
+						$response['message'] = 'Proses Berhasil';
+					}else{
+						$response['error'] = 'E111';
+						$response['message'] = 'Proses Gagal';
+					}
+				}else{
+					$response['error'] = 'E119';
+					$response['message'] = 'Key Tidak Ditemukan';
+				}
+				break;
+			case 'get_forgot':
+				$_POST = json_decode($_POST['data'],true);
+				$pelanggan = new pelangganController();
+				$result = $pelanggan->getPelangganForgot($_POST);
+				if (!$result['found']) {
+					$response['error'] = 'E121';
+					$response['message'] = 'Data tidak ditemukan';
+				}else{
+					$response['error'] = 'E120';
+					$response['message'] = 'Proses Berhasil';
+					$response['data'] = $result['data'];
+				}
+				break;
+
       default :
         $response['error'] = 'E01';
         $response['message'] = 'Request Fungsi Invalid';
