@@ -5,7 +5,12 @@ function pushEmail($email, $request_type, $request_key){
   switch ($request_type) {
     case 'REG':
       $subject = "Email verification";
-      $message = "<p> Your verification key is : \n".$request_key."</p>";
+      $message = "<p> Kode verifikasi mu adalah : \n".$request_key."</p>";
+      break;
+
+    case 'FPW':
+      $subject = "Forgot Password Request";
+      $message = "<p> Kode verifikasi mu adalah : \n".$request_key."</p>";
       break;
 
     default:

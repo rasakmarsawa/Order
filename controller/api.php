@@ -229,34 +229,72 @@
 
 			case 'request':
 				$_POST = json_decode($_POST['data'],true);
+				isTheseParametersAvailable(array('request_key'));
 				$pelanggan = new pelangganController();
-				$result = $pelanggan->requestHandle($_POST);
+				$result = $pelanggan->getRequest($_POST);
 				if ($result['found']) {
-					if ($result['success']) {
-						$response['error'] = 'E110';
-						$response['message'] = 'Proses Berhasil';
-					}else{
-						$response['error'] = 'E111';
-						$response['message'] = 'Proses Gagal';
+					$response['error'] = 'E110';
+					$response['message'] = 'Request ditemukan';
+					$data = $result['data'];
+					switch ($data['request_type']) {
+						case 'REG':
+							$res = $pelanggan->verifyAccount($data);
+							if ($res) {
+								$response['error'] = 'E110-10';
+								$response['message'] = 'Akun berhasil di verifikasi';
+							}else{
+								$response['error'] = 'E110-11';
+								$response['message'] = 'Akun tidak berhasil di verifikasi';
+							}
+							break;
+						case 'FPW':
+							$response['error'] = 'E110-20';
+							$response['message'] = 'Reset password dalam proses';
+							$response['data'] = $data;
+							break;
+
+						default:
+							$response['error'] = 'E110-01';
+							$response['message'] = 'Tipe request tidak diketahui';
+							break;
 					}
 				}else{
-					$response['error'] = 'E119';
-					$response['message'] = 'Key Tidak Ditemukan';
+					$response['error'] = 'E111';
+					$response['message'] = 'Request tidak ditemukan';
 				}
 				break;
-			case 'get_forgot':
+
+			case 'request_forgot':
 				$_POST = json_decode($_POST['data'],true);
+				isTheseParametersAvailable(array('email','username'));
 				$pelanggan = new pelangganController();
-				$result = $pelanggan->getPelangganForgot($_POST);
-				if (!$result['found']) {
-					$response['error'] = 'E121';
-					$response['message'] = 'Data tidak ditemukan';
-				}else{
+				$result = $pelanggan->makeRequest($_POST,'FPW');
+				if ($result) {
 					$response['error'] = 'E120';
-					$response['message'] = 'Proses Berhasil';
-					$response['data'] = $result['data'];
+					$response['message'] = 'Request berhasil dibuat';
+
+					$data = $pelanggan->getPelangganById($_POST['username']);
+					pushEmail($data['email'],$data['request_type'],$data['request_key']);
+
+				}else{
+					$response['error'] = 'E121';
+					$response['message'] = 'Request gagal dibuat';
 				}
 				break;
+
+				case 'change_password':
+					$_POST = json_decode($_POST['data'],true);
+					isTheseParametersAvailable(array('password'));
+					$pelanggan = new pelangganController();
+					$result = $pelanggan->changePassword($_POST);
+					if ($result) {
+						$response['error'] = 'E130';
+						$response['message'] = 'Password berhasil di update';
+					}else{
+						$response['error'] = 'E131';
+						$response['message'] = 'Password tidak berhasil di update';
+					}
+					break;
 
       default :
         $response['error'] = 'E01';

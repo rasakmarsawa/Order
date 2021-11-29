@@ -110,42 +110,6 @@ class pelangganController
     return $arr;
   }
 
-  function requestHandle($post){
-    //get request type
-    $sql = "select username,request_type from pelanggan where
-     request_key = '".$post['request_key']."' and
-     request_create + interval 5 minute >= current_timestamp";
-    $result = $GLOBALS['mysqli']->query($sql);
-
-    $data = array();
-    $data['found'] = false;
-
-    if(mysqli_num_rows($result)==1){
-      $data['found'] = true;
-      $data['data'] = mysqli_fetch_assoc($result);
-      $data['success'] = false;
-    }
-
-    //handle
-    if ($data['found']==true) {
-      switch ($data['data']['request_type']) {
-        case 'REG':
-          $sql = "update pelanggan set verify_status = 1,
-            request_create = NULL, request_type = NULL, request_key = NULL
-            where username = '".$data['data']['username']."'";
-
-          $result = $GLOBALS['mysqli']->query($sql);
-          $data['success'] = true;
-          break;
-
-        default:
-          $data['success'] = false;
-          break;
-      }
-    }
-    return $data;
-  }
-
   function clearUnveryfied(){
     $sql = "delete from pelanggan where verify_status = 0 and
     request_create + interval 5 minute < current_timestamp";
@@ -153,9 +117,9 @@ class pelangganController
     $GLOBALS['mysqli']->query($sql);
   }
 
-  function getPelangganForgot($post){
-    $sql = "select * from pelanggan where username = '".$post['username']."'
-    and email = '".$post['email']."'";
+  function getRequest($post){
+    $sql = "select * from pelanggan where request_key = '".$post['request_key']."'
+     AND request_create + interval 5 minute >= current_timestamp";
     $result = $GLOBALS['mysqli']->query($sql);
 
     $data = array();
@@ -165,6 +129,48 @@ class pelangganController
       $data['data'] = mysqli_fetch_assoc($result);
     }
     return $data;
+  }
+
+  function verifyAccount($post){
+    $sql = "update pelanggan set verify_status = 1, request_key = NULL,
+    request_type = NULL, request_create = NULL where username = '".$post['username']."'";
+
+    $result = $GLOBALS['mysqli']->query($sql);
+
+    return $result;
+  }
+
+  function makeRequest($post,$request_type){
+    $sql = "update pelanggan set
+    request_create = current_timestamp,
+    request_type = '".$request_type."',
+    request_key = MD5(CONCAT('".$post['username']."',current_timestamp))
+    where username = '".$post['username']."'
+    and email = '".$post['email']."'
+    and verify_status = 1";
+
+    $GLOBALS['mysqli']->query($sql);
+
+    $result = false;
+    if (mysqli_affected_rows($GLOBALS['mysqli'])==1) {
+      $result = true;
+    }
+
+    return $result;
+  }
+
+  function changePassword($post){
+    $sql = "update pelanggan set password = md5('".$post['password']."') where
+    username = '".$post['username']."'";
+
+    $GLOBALS['mysqli']->query($sql);
+
+    $result = false;
+    if (mysqli_affected_rows($GLOBALS['mysqli'])==1) {
+      $result = true;
+    }
+
+    return $result;
   }
 }
 
