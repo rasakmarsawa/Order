@@ -30,6 +30,8 @@ if (isset($_POST['submit'])) {
       );
 
       $session->redirect('detailPesanan.php?tanggal='.$_GET['tanggal'].'&&no='.$_GET['no'].'&&Next');
+  }else{
+    $session->redirect('detailPesanan.php?tanggal='.$_GET['tanggal'].'&&no='.$_GET['no'].'&&Nextfail');
   }
 }
 ?>
@@ -62,7 +64,7 @@ if (isset($_POST['submit'])) {
                                         <label>Status : <?php echo $pesanan->statusMeaning($data0['status']) ?></label>
                                       </div>
                                       <div>
-                                        <?php if ($data0['status']!=4 && $_SESSION['admin']!=1): ?>
+                                        <?php if ($data0['status']<4 && $_SESSION['admin']!=1): ?>
                                           <button name="submit" type="submit" class="btn btn-primary">
                                             <?php switch ($data0['status']) {
                                               case '1':
@@ -88,6 +90,14 @@ if (isset($_POST['submit'])) {
                                     <span aria-hidden="true">×</span>
                                   </button>
                                     Pesanan dilanjutkan. Status pesanan saat ini <?php echo $pesanan->statusMeaning($data0['status']) ?>
+                                  </div>
+                                <?php endif; ?>
+                                <?php if (isset($_GET['Nextfail'])): ?>
+                                  <div class="alert alert-danger alert-dismissible fade show">
+                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                  </button>
+                                    Pesanan tidak bisa di proses karena pesanan sudah dibatalkan.
                                   </div>
                                 <?php endif; ?>
                                 <div class="card-body">

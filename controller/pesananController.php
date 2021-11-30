@@ -163,6 +163,38 @@ class pesananController
     $result = $GLOBALS['mysqli']->query($sql);
     return $result;
   }
+
+  function addPesananGuess($post, $barangList){
+    $total_harga = 0;
+
+    $dataPesanan = [
+      'tanggal' => date("Y-m-d",strtotime("now")),
+      'id_pelanggan' => ''
+    ];
+    $dataDetail = array();
+    $i=0;
+    foreach ($post as $key => $value) {
+      if ($key!='submit' && $value!=0) {
+        $total_harga = $total_harga+($barangList[$key]['harga']*$value);
+        $dataDetail[$i]['id_barang'] = $barangList[$key]['id_barang'];
+        $dataDetail[$i]['jumlah_barang'] = $value;
+        $i++;
+      }
+    }
+    $dataPesanan['total_harga'] = $total_harga;
+
+    $format = [
+      "item" => $dataDetail,
+      "tanggal" => $dataPesanan['tanggal']
+    ];
+
+    $data = [
+      "dataPesanan" => $dataPesanan,
+      "dataDetail" => $format
+    ];
+
+    return $data;
+  }
 }
 
 ?>

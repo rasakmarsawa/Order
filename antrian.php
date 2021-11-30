@@ -20,31 +20,36 @@ if ($session->checkAdmin()==true) {
 }
 
 if (isset($_POST['submit'])) {
-  if ($_POST['submit']=='2') {
-    //antrian ditutup
-    $status->updateStatus(2,$_SESSION['username']);
-    pushNotification(
-      0,
-      $pelanggan->getAllToken(),
-      "Restoran tutup",
-      "Udah ga bisa mesan makanan lagi deh",
-      3,
-      2,
-      null
-    );
-  }else {
-    //antrian dibuka
-    $status->updateStatus(1,$_SESSION['username']);
+  switch ($_POST['submit']) {
+    case '1':
+      // code...
+      $status->updateStatus(1,$_SESSION['username']);
 
-    pushNotification(
-      0,
-      $pelanggan->getAllToken(),
-      "Restoran buka",
-      "Udah bisa pesan makanan lagi nih",
-      3,
-      1,
-      null
-    );
+      pushNotification(
+        0,
+        $pelanggan->getAllToken(),
+        "Restoran buka",
+        "Udah bisa pesan makanan lagi nih",
+        3,
+        1,
+        null
+      );
+      break;
+    case '2':
+      $status->updateStatus(2,$_SESSION['username']);
+      pushNotification(
+        0,
+        $pelanggan->getAllToken(),
+        "Restoran tutup",
+        "Udah ga bisa mesan makanan lagi deh",
+        3,
+        2,
+        null
+      );
+      break;
+    default:
+      $session->redirect('tambahPesanan.php');
+      break;
   }
 }
 
@@ -65,16 +70,18 @@ $stat = $status->getLastStatus();
                                 <div class="card-title mb-2">
                                     <h4>Antrian Pesanan </h4>
                                     <div class="col-lg-12">
-                                      <form class="basic-farm float-right" method="post">
-                                        <center>
-                                          <div class="form-group mb-0">
-                                              <label>Status Antrian : <?php echo $status->statusMeaning($stat['status']) ?></label>
+                                      <div>
+                                          <label>Status Antrian : <?php echo $status->statusMeaning($stat['status']) ?></label>
+                                      </div>
+                                      <form class="basic-farm" method="post">
+                                          <div class="form-group">
+                                            <?php if ($stat['status']==1): ?>
+                                                <button name="submit" type="submit" class="btn btn-primary" value="2">Tutup</button>
+                                              <?php else: ?>
+                                                <button name="submit" type="submit" class="btn btn-primary" value="1">Buka</button>
+                                            <?php endif; ?>
+                                            <button name="submit" type="submit" class="btn btn-primary float-right" value="0">Tambah Pesanan</button>
                                           </div>
-                                          <?php if ($stat['status']==1): ?>
-                                              <button name="submit" type="submit" class="btn btn-primary" value="2">Tutup</button>
-                                            <?php else: ?>
-                                              <button name="submit" type="submit" class="btn btn-primary" value="1">Buka</button>
-                                          <?php endif; ?>
                                         </center>
                                       </form>
                                     </div>

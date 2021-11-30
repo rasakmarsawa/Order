@@ -42,7 +42,7 @@ if ($session->checkAdmin()==false) {
                                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">×</span>
                                   </button>
-                                    Tambah data tidak berhasil.
+                                    Tambah data tidak berhasil. Nama barang sudah digunakan.
                                   </div>
                                 <?php endif; ?>
                                 <div class="card-body">
