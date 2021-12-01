@@ -3,10 +3,12 @@ include 'controller/session.php';
 include 'controller/pesananController.php';
 include 'controller/detailPesananController.php';
 include 'controller/notification.php';
+include 'controller/statusPesananController.php';
 
 $session = new session();
 $pesanan = new pesananController();
 $detail = new detailPesananController();
+$spesanan = new statusPesananController();
 
 if ($session->check()==false) {
   $session->redirect('login.php');
@@ -18,12 +20,15 @@ $data = $detail->getDetailPesananByPesanan($_GET);
 if (isset($_POST['submit'])) {
   if($pesanan->next($_GET)){
       $data0['status'] = $data0['status']+1;
+      $x = $spesanan->getStatusPesananById($data0['status']);
+      $data0['nama_status'] = $x['nama_status'];
+      $data0['message'] = $x['message'];
 
-      $res = pushNotification(
+      pushNotification(
         1,
         $data0['fcm_token'],
         'Pesananmu',
-        'Status pesananmu saat ini adalah '.$pesanan->statusMeaning($data0['status']),
+        $data0['message'],
         1,
         $data0,
         "DetailActivity"
@@ -61,7 +66,7 @@ if (isset($_POST['submit'])) {
                                   <form class="basic-farm float-right" method="post">
                                     <center>
                                       <div class="form-group mb-0">
-                                        <label>Status : <?php echo $pesanan->statusMeaning($data0['status']) ?></label>
+                                        <label>Status : <?php echo $data0['nama_status'] ?></label>
                                       </div>
                                       <div>
                                         <?php if ($data0['status']<4 && $_SESSION['admin']!=1): ?>
@@ -89,7 +94,7 @@ if (isset($_POST['submit'])) {
                                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">×</span>
                                   </button>
-                                    Pesanan dilanjutkan. Status pesanan saat ini <?php echo $pesanan->statusMeaning($data0['status']) ?>
+                                    Pesanan dilanjutkan. Status pesanan saat ini <?php echo $data0['nama_status'] ?>
                                   </div>
                                 <?php endif; ?>
                                 <?php if (isset($_GET['Nextfail'])): ?>

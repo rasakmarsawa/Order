@@ -49,7 +49,7 @@ $data = $pesanan->getPesanan();
                                                       <td><?php echo $value['tanggal'] ?></td>
                                                       <td><?php echo $value['no'] ?></td>
                                                       <td><?php echo $value['nama_pelanggan'] ?></td>
-                                                      <td><?php echo $pesanan->statusMeaning($value['status']) ?></td>
+                                                      <td><?php echo $value['nama_status'] ?></td>
                                                       <td><center><a type="button" class="btn btn-primary" href="detailPesanan.php?tanggal=<?php echo $value['tanggal'] ?>&&no=<?php echo $value['no'] ?>">Detail</a></center></td>
                                                   </tr>
                                                 <?php endforeach; ?>

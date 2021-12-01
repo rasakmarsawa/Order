@@ -17,10 +17,12 @@ $arr = $barang->getBarang();
 
 if (isset($_POST['submit'])) {
   $data = $pesanan->addPesananGuess($_POST,$arr);
-  $pesanan->api_addPesanan($data['dataPesanan']);
-  $detailPesanan->api_addDetailPesanan($data['dataDetail']);
+  if ($data['dataPesanan']['total_harga']!=0) {
+    $pesanan->api_addPesanan($data['dataPesanan']);
+    $detailPesanan->api_addDetailPesanan($data['dataDetail']);
 
-  $session->redirect('antrian.php');
+    $session->redirect('antrian.php');
+  }
 }
 ?>
 

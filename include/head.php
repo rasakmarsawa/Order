@@ -50,6 +50,7 @@
                       <li><a href="listBarang.php"><i class="ti-truck"></i> Barang </a></li>
                       <li><a href="listKasir.php"><i class="ti-user"></i> Kasir </a></li>
                       <li><a href="listPesanan.php"><i class="ti-shopping-cart-full"></i> Pesanan </a></li>
+                      <li><a href="listStatus.php"><i class="ti-list"></i> Status Pesanan </a></li>
                     <?php else: ?>
                       <li><a href="antrian.php"><i class="ti-shopping-cart"></i> Antrian </a></li>
                       <li><a href="topup.php"><i class="ti-wallet"></i> Topup </a></li>

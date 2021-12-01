@@ -8,7 +8,13 @@ class pesananController
   function __construct(){}
 
   function getPesanan(){
-    $sql = "SELECT pesanan.*, pelanggan.nama_pelanggan FROM pesanan INNER JOIN pelanggan ON pesanan.id_pelanggan = pelanggan.username";
+    $sql = "SELECT
+    pesanan.*,
+    pelanggan.nama_pelanggan,
+    status_pesanan.nama_status
+    FROM pesanan
+    INNER JOIN pelanggan ON pesanan.id_pelanggan = pelanggan.username
+    INNER JOIN status_pesanan ON pesanan.status = status_pesanan.id_status";
 
     $result = $GLOBALS['mysqli']->query($sql);
 
@@ -25,9 +31,11 @@ class pesananController
   function getAntrian(){
     $sql = "SELECT
     pesanan.*,
-    pelanggan.nama_pelanggan
+    pelanggan.nama_pelanggan,
+    status_pesanan.nama_status
     FROM pesanan
     INNER JOIN pelanggan ON pesanan.id_pelanggan = pelanggan.username
+    INNER JOIN status_pesanan ON pesanan.status = status_pesanan.id_status
     WHERE tanggal = current_date and pesanan.status<4";
     $result = $GLOBALS['mysqli']->query($sql);
 
@@ -45,9 +53,11 @@ class pesananController
     $sql = "SELECT
     pesanan.*,
     pelanggan.nama_pelanggan,
-    pelanggan.fcm_token
+    pelanggan.fcm_token,
+    status_pesanan.*
     FROM pesanan
     INNER JOIN pelanggan ON pesanan.id_pelanggan = pelanggan.username
+    INNER JOIN status_pesanan ON pesanan.status = status_pesanan.id_status
     WHERE pesanan.tanggal = '".$post['tanggal']."' AND pesanan.no = ".$post['no'];
     $result = $GLOBALS['mysqli']->query($sql);
 
@@ -58,26 +68,6 @@ class pesananController
     }
 
     return $data;
-  }
-
-  function statusMeaning($status){
-    switch ($status) {
-      case '1':
-        return 'Menunggu';
-        break;
-      case '2':
-        return 'Dalam Proses';
-        break;
-      case '3':
-        return 'Menunggu Pengambilan';
-        break;
-      case '4':
-        return 'Selesai';
-        break;
-      case '5':
-        return 'Dibatalkan';
-        break;
-    }
   }
 
   function next($post){
@@ -103,13 +93,30 @@ class pesananController
   }
 
   function api_addPesanan($post){
-    $sql = "insert into pesanan(`tanggal`,`total_harga`,`id_pelanggan`) values ('".$post['tanggal']."',".$post['total_harga'].",'".$post['id_pelanggan']."')";
+    $sql = "insert into pesanan(
+      `tanggal`,
+      `total_harga`,
+      `id_pelanggan`
+      )
+    values (
+      '".$post['tanggal']."',
+      ".$post['total_harga'].",
+      '".$post['id_pelanggan']."'
+    )";
     $result = $GLOBALS['mysqli']->query($sql);
     return $result;
   }
 
   function api_getAntrianByUser($post){
-    $sql = "SELECT * FROM pesanan WHERE id_pelanggan = '".$post['username']."' AND status < 4 order by tanggal desc, no desc";
+    $sql = "SELECT
+      *,
+      status_pesanan.nama_status
+    FROM pesanan
+    INNER JOIN status_pesanan ON
+      pesanan.status = status_pesanan.id_status
+    WHERE
+      id_pelanggan = '".$post['username']."' AND
+      status < 4 order by tanggal desc, no desc";
 
     $res = $GLOBALS['mysqli']->query($sql);
 
@@ -174,7 +181,7 @@ class pesananController
     $dataDetail = array();
     $i=0;
     foreach ($post as $key => $value) {
-      if ($key!='submit' && $value!=0) {
+      if (is_numeric($key) && $value!=0) {
         $total_harga = $total_harga+($barangList[$key]['harga']*$value);
         $dataDetail[$i]['id_barang'] = $barangList[$key]['id_barang'];
         $dataDetail[$i]['jumlah_barang'] = $value;
