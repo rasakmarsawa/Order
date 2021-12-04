@@ -53,56 +53,59 @@ $activity = $pelanggan->getActivity($_GET['id']);
                     <div class="row">
                         <!-- /# column -->
                             <div class="card col-lg-12">
-                              <div class="row">
-                                <div class="card-title mb-2">
-                                    <h4>Detail Pelanggan </h4>
-                                </div>
+                              <div class="card-title">
+                                  <h4>Detail Pelanggan </h4>
+                                  <hr>
                               </div>
-                              <div class="row">
-                                <div class="col-lg-6">
-                                    <h4 class="card-title"><?php echo $data['nama_pelanggan'] ?></h4>
-                                    <h6 class="card-subtitle"><?php echo $data['username'] ?>/ Rp. <?php echo $data['saldo']; ?></h6>
+                              <?php if (isset($_GET['topup'])): ?>
+                                <div class="alert alert-success alert-dismissible fade show">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">×</span>
+                                </button>
+                                  Saldo pelanggan berhasil ditambahkan.
                                 </div>
-                                <div class="col-lg-6">
-                                  <form class="basic-farm float-right" method="post">
-                                    <div class="form-group">
-                                        <label>Topup</label>
-                                        <input name="jumlah_topup" class="form-control" placeholder="Jumlah Topup">
-                                    </div>
-                                    <button name="submit" type="submit" class="btn btn-default">Submit</button>
-                                  </form>
+                              <?php endif; ?>
+                              <?php if (isset($_GET['fail'])): ?>
+                                <div class="alert alert-danger alert-dismissible fade show">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">×</span>
+                                </button>
+                                  Gagal melakukan topup. Harap isi jumlah dengan benar.
                                 </div>
-                              </div>
-                              <div class="row">
-                                <div class="card-title mb-2">
-                                    <h4>Aktifitas Pelanggan</h4>
+                              <?php endif; ?>
+                              <?php if (isset($_GET['empty'])): ?>
+                                <div class="alert alert-danger alert-dismissible fade show">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">×</span>
+                                </button>
+                                  Gagal melakukan topup. Jumlah topup tidak boleh dikosongkan.
+                                </div>
+                              <?php endif; ?>
+                              <div class="card-subtitle">
+                                <div class="row">
+                                  <div class="col-lg-6">
+                                    <p>
+                                      Nama Pelanggan : <?php echo $data['nama_pelanggan'] ?><br>
+                                      Username : <?php echo $data['username'] ?><br>
+                                      Saldo : <?php echo $data['saldo'] ?>
+                                    </p>
+                                  </div>
+                                  <div class="col-lg-6">
+                                    <form class="basic-farm float-right" method="post">
+                                      <div class="form-group">
+                                          <p>Topup Saldo Pelanggan</p>
+                                          <input name="jumlah_topup" class="form-control" placeholder="Jumlah Topup">
+                                      </div>
+                                      <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+                                    </form>
+                                  </div>
                                 </div>
                               </div>
                                 <div class="card-body">
-                                  <?php if (isset($_GET['topup'])): ?>
-                                    <div class="alert alert-success alert-dismissible fade show">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                      <span aria-hidden="true">×</span>
-                                    </button>
-                                      Saldo pelanggan berhasil ditambahkan.
-                                    </div>
-                                  <?php endif; ?>
-                                  <?php if (isset($_GET['fail'])): ?>
-                                    <div class="alert alert-danger alert-dismissible fade show">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                      <span aria-hidden="true">×</span>
-                                    </button>
-                                      Gagal melakukan topup. Harap isi jumlah dengan benar.
-                                    </div>
-                                  <?php endif; ?>
-                                  <?php if (isset($_GET['empty'])): ?>
-                                    <div class="alert alert-danger alert-dismissible fade show">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                      <span aria-hidden="true">×</span>
-                                    </button>
-                                      Gagal melakukan topup. Jumlah topup tidak boleh dikosongkan.
-                                    </div>
-                                  <?php endif; ?>
+                                  <div class="card-title mb-2">
+                                      <h4>Aktifitas Pelanggan</h4>
+                                      <hr>
+                                  </div>
                                     <div class="table-responsive">
                                         <table class="table table-bordered">
                                             <thead>
@@ -135,15 +138,6 @@ $activity = $pelanggan->getActivity($_GET['id']);
                             <!-- /# card -->
                         </div>
                         <!-- /# column -->
-                    </div>
-                    <!-- /# row -->
-
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="footer">
-                                <p>2021 © X9090</p>
-                            </div>
-                        </div>
                     </div>
                 </section>
             </div>

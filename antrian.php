@@ -47,9 +47,6 @@ if (isset($_POST['submit'])) {
         null
       );
       break;
-    default:
-      $session->redirect('tambahPesanan.php');
-      break;
   }
 }
 
@@ -67,26 +64,30 @@ $stat = $status->getLastStatus();
                     <div class="row">
                         <!-- /# column -->
                             <div class="card col-lg-12">
-                                <div class="card-title mb-2">
+                                <div class="card-title">
                                     <h4>Antrian Pesanan </h4>
-                                    <div class="col-lg-12">
-                                      <div>
-                                          <label>Status Antrian : <?php echo $status->statusMeaning($stat['status']) ?></label>
+                                    <hr>
+                                </div>
+                                <div class="card-subtitle">
+                                  <p>Status Antrian : <?php echo $status->statusMeaning($stat['status']) ?></p>
+                                  <form class="basic-form" method="post">
+                                      <div class="form-group">
+                                        <?php if ($stat['status']==1): ?>
+                                            <button name="submit" type="submit" class="btn btn-primary" value="2">Tutup Antrian</button>
+                                          <?php else: ?>
+                                            <button name="submit" type="submit" class="btn btn-primary" value="1">Buka Antrian</button>
+                                        <?php endif; ?>
                                       </div>
-                                      <form class="basic-farm" method="post">
-                                          <div class="form-group">
-                                            <?php if ($stat['status']==1): ?>
-                                                <button name="submit" type="submit" class="btn btn-primary" value="2">Tutup</button>
-                                              <?php else: ?>
-                                                <button name="submit" type="submit" class="btn btn-primary" value="1">Buka</button>
-                                            <?php endif; ?>
-                                            <button name="submit" type="submit" class="btn btn-primary float-right" value="0">Tambah Pesanan</button>
-                                          </div>
-                                        </center>
-                                      </form>
-                                    </div>
+                                    </center>
+                                  </form>
+                                </div>
+                                <div class="card-title">
+                                  <hr>
                                 </div>
                                 <div class="card-body">
+                                  <a href="tambahPesanan.php" class="btn btn-primary float-right">
+                                    Tambah Pesanan
+                                  </a>
                                   <div class="bootstrap-data-table-panel">
                                       <div class="table-responsive">
                                           <table id="row-select" class="display table table-borderd table-hover">
@@ -124,15 +125,6 @@ $stat = $status->getLastStatus();
                             <!-- /# card -->
                         </div>
                         <!-- /# column -->
-                    </div>
-                    <!-- /# row -->
-
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="footer">
-                                <p>2021 © X9090</p>
-                            </div>
-                        </div>
                     </div>
                 </section>
             </div>

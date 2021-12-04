@@ -7,7 +7,7 @@ class pelangganController
   function __construct(){}
 
   function getPelangganById($id){
-    $sql = "select * from pelanggan where username = '".$id."'";
+    $sql = "select * from pelanggan where username = '".$id."' and verify_status != 2";
     $result = $GLOBALS['mysqli']->query($sql);
 
     if (mysqli_num_rows($result)==1) {

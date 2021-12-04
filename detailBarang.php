@@ -34,39 +34,35 @@ $detail = $barang->getDetailBarang($_GET['id']);
                     <div class="row">
                         <!-- /# column -->
                             <div class="card col-lg-12">
-                              <div class="row">
-                                <div class="card-title mb-2">
-                                    <h4>Detail Barang </h4>
-                                </div>
+                              <div class="card-title">
+                                  <h4>Detail Barang </h4>
+                                  <hr>
                               </div>
-                              <div class="row">
-                                <div class="col-lg-6">
-                                    <h4 class="card-title"><?php echo $data['nama_barang'] ?></h4>
-                                    <h6 class="card-subtitle"><?php echo "Rp.".$data['harga'] ?></h6>
+                              <?php if (isset($_GET['update'])): ?>
+                                <div class="alert alert-success alert-dismissible fade show">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">×</span>
+                                </button>
+                                  Barang berhasil diubah.
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="float-right">
-                                      <a type="button" class="btn btn-danger mr-1" href="?delete=<?php echo $data['id_barang'] ?>">Hapus</a>
-                                    </div>
-                                    <div class="float-right">
-                                      <a type="button" class="btn btn-primary mr-1" href="ubahBarang.php?id=<?php echo $data['id_barang'] ?>">Ubah</a>
-                                    </div>
+                              <?php endif; ?>
+                              <div class="card-subtitle">
+                                <p class="tab">
+                                Nama Barang : <?php echo $data['nama_barang'] ?> <br>
+                                Harga : Rp. <?php echo $data['harga'] ?>,-
+                                </p>
+                                <div class="float-right">
+                                  <a type="button" class="btn btn-danger mr-1" href="?delete=<?php echo $data['id_barang'] ?>">Hapus</a>
                                 </div>
-                              </div>
-                              <div class="row">
-                                <div class="card-title mb-2">
-                                    <h4>Penjualan Barang</h4>
+                                <div class="float-right">
+                                  <a type="button" class="btn btn-primary mr-1" href="ubahBarang.php?id=<?php echo $data['id_barang'] ?>">Ubah</a>
                                 </div>
                               </div>
                                 <div class="card-body">
-                                  <?php if (isset($_GET['update'])): ?>
-                                    <div class="alert alert-success alert-dismissible fade show">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                      <span aria-hidden="true">×</span>
-                                    </button>
-                                      Barang berhasil diubah.
-                                    </div>
-                                  <?php endif; ?>
+                                  <div class="card-title mb-2">
+                                      <h4>Penjualan Barang</h4>
+                                      <hr>
+                                  </div>
                                     <div class="bootstrap-data-table-panel">
                                         <div class="table-responsive">
                                             <table id="row-select" class="display table table-borderd table-hover">
@@ -101,15 +97,6 @@ $detail = $barang->getDetailBarang($_GET['id']);
                             <!-- /# card -->
                         </div>
                         <!-- /# column -->
-                    </div>
-                    <!-- /# row -->
-
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="footer">
-                                <p>2021 © X9090</p>
-                            </div>
-                        </div>
                     </div>
                 </section>
             </div>

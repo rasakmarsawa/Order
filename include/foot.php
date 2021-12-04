@@ -1,3 +1,5 @@
+
+
 <!-- jquery vendor -->
 <script src="assets/js/lib/jquery.min.js"></script>
 <script src="assets/js/lib/jquery.nanoscroller.min.js"></script>
@@ -24,7 +26,7 @@
 <script type="text/javascript">
   if (document.getElementById('row-select_wrapper')) {
       document.getElementById('row-select_wrapper').childNodes[1].setAttribute('class','col-lg-12');
-  }  
+  }
 </script>
 </body>
 

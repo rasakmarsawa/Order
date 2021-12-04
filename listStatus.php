@@ -28,6 +28,7 @@ $arr = $spesanan->getStatusPesanan();
                             <div class="card col-lg-12">
                                 <div class="card-title mb-2">
                                     <h4>List Status Pesanan </h4>
+                                    <hr>
                                 </div>
                                 <div class="card-body">
                                   <?php if (isset($_GET['update'])): ?>
@@ -70,16 +71,6 @@ $arr = $spesanan->getStatusPesanan();
                         </div>
                         <!-- /# column -->
                     </div>
-                    <!-- /# row -->
-
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="footer">
-                                <p>2021 © X9090</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
             </div>
         </div>
     </div>

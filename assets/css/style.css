@@ -88,7 +88,14 @@
 }
 .card-subtitle {
   font-size: 12px;
-  margin: 10px 0;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+.card-subtitle p {
+  font-size: 18px;
+  color: black;
+  font-family: robot;
+  margin-bottom: 10px;
 }
 .card-title {
   font-weight: 400;
@@ -98,11 +105,18 @@
 .card-title h4 {
   display: inline-block;
   font-weight: 400;
-  font-size: 18px;
+  font-size: 40px;
+  font-family: indigo;
 }
 .card-title p {
   font-family: 'Roboto', sans-serif;
   margin-bottom: 12px;
+}
+.card-title hr {
+  margin-top: 0rem;
+  margin-bottom: 20px;
+  height: 5px;
+  background-color: black;
 }
 .card-header-right-icon {
   display: inline-block;
@@ -557,16 +571,16 @@ a.dt-button.active:not(.disabled) {
   box-shadow: none;
 }
 .btn-primary {
-  background: #5873fe;
-  border-color: #5873fe;
+  background: #45B649;
+  border-color: #90EE90;
   color: #ffffff;
 }
 .btn-primary.active,
 .btn-primary:focus,
 .btn-primary:hover {
-  background: #2549fe;
-  border-color: #5873fe;
-  color: #ffffff;
+  background: #ffffff;
+  border-color: #90EE90;
+  color: black;
   box-shadow: none;
 }
 .btn-success {
@@ -616,9 +630,9 @@ a.dt-button.active:not(.disabled) {
 .btn-danger.active,
 .btn-danger:focus,
 .btn-danger:hover {
-  background: #bd2130;
+  background: #ffffff;
   border-color: #dc3545;
-  color: #ffffff;
+  color: black;
   box-shadow: none;
 }
 .btn-pink {
@@ -700,14 +714,14 @@ a.dt-button.active:not(.disabled) {
 /*    Header
 ---------------*/
 .header {
-  background: #ffffff;
+  background: #FFFFFF;
   z-index: 990;
   margin-left: 250px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
   transition: margin-left 300ms ease-in-out 0s;
 }
 .logo {
-  background: #343957;
+  background: #45B649;
   display: inline-block;
   padding: 15px 0;
   text-align: center;
@@ -715,10 +729,14 @@ a.dt-button.active:not(.disabled) {
   transition: width 300ms ease-in-out;
 }
 .logo span {
-  color: rgba(160, 180, 200, 0.85);
+  color: #ffffff;
   font-size: 20px;
   font-weight: 700;
 }
+.nano-content ul li {
+  background-color: #45B649;
+}
+
 .sidebar-hide .logo {
   width: 0;
 }
@@ -2088,6 +2106,7 @@ footer p {
 label {
   font-weight: 400;
   margin-bottom: 10px;
+  color: black;
 }
 /*    Form Horizontal
 ----------------------*/
@@ -2712,7 +2731,7 @@ tbody tr th {
 }
 tbody tr td {
   font-family: 'Roboto', sans-serif;
-  color: #868e96;
+  color: black;
 }
 tbody tr td:last-child {
   text-align: right;
@@ -2793,27 +2812,31 @@ tbody tr td:last-child {
 }
 .login-logo {
   text-align: center;
-  margin-bottom: 15px;
 }
 .login-logo span {
   color: #ffffff;
-  font-size: 24px;
+  font-size: 80px;
+  font-family: indigo;
+  margin-bottom: 0px;
 }
 .login-logo img {
   height: 75px;
 }
 .login-content {
-  margin: 100px 0;
+  margin: 40px 0;
 }
 .login-form {
   background: #ffffff;
-  padding: 30px 30px 20px;
-  border-radius: 2px;
+  padding: 30px 30px;
+  border-radius: 25px;
 }
 .login-form h4 {
   color: #373757;
   text-align: center;
-  margin-bottom: 50px;
+  font-family: themify;
+}
+.login-form hr {
+  width: 50%;
 }
 .login-form .checkbox {
   color: #373757;
@@ -2824,7 +2847,7 @@ tbody tr td:last-child {
 .login-form .btn {
   width: 100%;
   text-transform: uppercase;
-  font-size: 14px;
+  font-size: 15px;
   padding: 15px;
   border: 0px;
 }
@@ -3068,7 +3091,7 @@ tbody tr td:last-child {
 .alert-success {
   background-color: #71dd8a;
   border-color: #71dd8a;
-  color: #28a745;
+  color: black;
 }
 .alert-warning {
   background-color: #f5e0ac;
@@ -3078,7 +3101,7 @@ tbody tr td:last-child {
 .alert-danger {
   background-color: #efa2a9;
   border-color: #efa2a9;
-  color: #dc3545;
+  color: black;
 }
 .alert-pink {
   background-color: #f8e4fb;
@@ -3219,7 +3242,6 @@ tbody tr td:last-child {
   width: 100%;
   height: 275px;
   padding: 20px 15px 15px;
-  margin: 15px auto 30px;
   background: transparent;
 }
 .flot-pie-container {
@@ -3709,7 +3731,7 @@ h3,
 h4,
 h5,
 h6.h1 {
-  color: #373757;
+  color: black;
 }
 .dib {
   display: inline-block;
@@ -3805,10 +3827,25 @@ h6.h1 {
   color: #ffffff;
   fill: #5873fe;
 }
-.bg-success {
-  background: #28a745;
+.bg-theme {
+  background: #90EE90;
   color: #ffffff;
-  fill: #28a745;
+  fill: #90EE90;
+}
+.bg-light-green {
+  background: #FAFFD1;
+  color: #ffffff;
+  fill: #FAFFD1;
+}
+.bg-dark-green {
+  background: #45B649;
+  color: #ffffff;
+  fill: #45B649;
+}
+.bg-success {
+  background: #45B649;
+  color: #ffffff;
+  fill: #45B649;
 }
 .bg-info {
   background: #03a9f4;
@@ -4511,4 +4548,18 @@ h6.h1 {
   .retina-logo {
     display: inline-block !important;
   }
+}
+
+html {
+  height: 100%;
+}
+
+@font-face {
+  font-family: indigo;
+  src: url(../fonts/indigo_daisy.ttf);
+}
+
+@font-face {
+  font-family: robot;
+  src: url(../fonts/roboto-regular.ttf);
 }

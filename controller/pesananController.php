@@ -99,7 +99,7 @@ class pesananController
       `id_pelanggan`
       )
     values (
-      '".$post['tanggal']."',
+      current_date,
       ".$post['total_harga'].",
       '".$post['id_pelanggan']."'
     )";
@@ -143,7 +143,10 @@ class pesananController
 
     $sql = "SELECT * FROM (SELECT ROW_NUMBER()
       OVER(ORDER BY tanggal desc, no desc) AS row_no,
-      pesanan.* FROM pesanan WHERE id_pelanggan = '".$post['username']."' AND status > 3) AS A
+      pesanan.*, status_pesanan.nama_status FROM pesanan
+      INNER JOIN status_pesanan ON
+      status_pesanan.id_status = pesanan.status
+      WHERE id_pelanggan = '".$post['username']."' AND status > 3) AS A
       WHERE row_no >= ".$start." AND row_no <= ".$end;
 
     $res = $GLOBALS['mysqli']->query($sql);
@@ -198,6 +201,51 @@ class pesananController
     $data = [
       "dataPesanan" => $dataPesanan,
       "dataDetail" => $format
+    ];
+
+    return $data;
+  }
+
+  function getPesananHarian(){
+    $sql = "
+    select
+      tanggal,
+      unix_timestamp(tanggal)*1000 as timestamp,
+      sum(total_harga) as total_harian,
+      count(no) as jumlah_pesanan
+    from pesanan
+    where
+      status = 4 AND
+      pesanan.tanggal > DATE(getNow())-INTERVAL 30 DAY
+    group by tanggal
+    ";
+
+    $result = $GLOBALS['mysqli']->query($sql);
+
+    $arr = array();
+    $today = [
+      'tanggal' => null,
+      'timestamp' => null,
+      'total_harian' => 0,
+      'jumlah_pesanan' => 0
+    ];
+    $i=0;
+    while ($data = mysqli_fetch_assoc($result)) {
+      $arr[$i]=$data;
+      if ($data['tanggal']==date("Y-m-d")) {
+        $today = [
+          'tanggal' => $data['tanggal'],
+          'timestamp' => $data['timestamp'],
+          'total_harian' => $data['total_harian'],
+          'jumlah_pesanan' => $data['jumlah_pesanan']
+        ];
+      }
+      $i++;
+    }
+
+    $data = [
+      'all' => $arr,
+      'today' => $today
     ];
 
     return $data;

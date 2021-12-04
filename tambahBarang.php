@@ -36,6 +36,7 @@ if ($session->checkAdmin()==false) {
                             <div class="card">
                                 <div class="card-title">
                                     <h4>Tambah Barang</h4>
+                                    <hr>
                                 </div>
                                 <?php if (isset($_GET['fail'])): ?>
                                   <div class="alert alert-danger alert-dismissible fade show">
@@ -56,22 +57,13 @@ if ($session->checkAdmin()==false) {
                                                 <label>Harga</label>
                                                 <input name="harga" type="harga" class="form-control" placeholder="Harga" maxlength="11">
                                             </div>
-                                            <button name="submit" type="submit" class="btn btn-default">Submit</button>
+                                            <button name="submit" type="submit" class="btn btn-primary">Submit</button>
                                         </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <!-- /# column -->
-                    </div>
-                    <!-- /# row -->
-
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="footer">
-                                <p>2021 © X9090</p>
-                            </div>
-                        </div>
                     </div>
                 </section>
             </div>

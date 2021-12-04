@@ -26,13 +26,14 @@ $arr = $barang->getBarang();
                     <div class="row">
                         <!-- /# column -->
                             <div class="card col-lg-12">
-                                <div class="card-title mb-2">
-                                    <h4>List Barang </h4>
-                                    <div class="float-right">
-                                        <a type="button" class="btn btn-primary" href="tambahBarang.php">Tambah</a>
-                                    </div>
+                                <div class="card-title">
+                                    <h4>List Barang</h4>
+                                    <hr>
                                 </div>
                                 <div class="card-body">
+                                  <div class="float-right mb-3">
+                                      <a type="button" class="btn btn-primary" href="tambahBarang.php">Tambah</a>
+                                  </div>
                                   <?php if (isset($_GET['add'])): ?>
                                     <div class="alert alert-success alert-dismissible fade show">
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -82,14 +83,6 @@ $arr = $barang->getBarang();
                         <!-- /# column -->
                     </div>
                     <!-- /# row -->
-
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="footer">
-                                <p>2021 © X9090</p>
-                            </div>
-                        </div>
-                    </div>
                 </section>
             </div>
         </div>

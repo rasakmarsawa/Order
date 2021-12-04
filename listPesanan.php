@@ -26,8 +26,9 @@ $data = $pesanan->getPesanan();
                     <div class="row">
                         <!-- /# column -->
                             <div class="card col-lg-12">
-                                <div class="card-title mb-2">
+                                <div class="card-title">
                                     <h4>List Pesanan</h4>
+                                    <hr>
                                 </div>
                                 <div class="card-body">
                                   <div class="bootstrap-data-table-panel">
@@ -71,15 +72,7 @@ $data = $pesanan->getPesanan();
                         </div>
                         <!-- /# column -->
                     </div>
-                    <!-- /# row -->
-
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="footer">
-                                <p>2021 © X9090</p>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- /# row -->                    
                 </section>
             </div>
         </div>

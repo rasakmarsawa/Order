@@ -26,13 +26,14 @@ $arr = $kasir->getKasir();
                     <div class="row">
                         <!-- /# column -->
                             <div class="card col-lg-12">
-                                <div class="card-title mb-2">
+                                <div class="card-title">
                                     <h4>List Kasir </h4>
-                                    <div class="float-right">
-                                        <a type="button" class="btn btn-primary" href="tambahKasir.php">Tambah</a>
-                                    </div>
+                                    <hr>
                                 </div>
                                 <div class="card-body">
+                                  <div class="float-right mb-3">
+                                      <a type="button" class="btn btn-primary" href="tambahKasir.php">Tambah</a>
+                                  </div>
                                   <?php if (isset($_GET['add'])): ?>
                                     <div class="alert alert-success alert-dismissible fade show">
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -86,15 +87,6 @@ $arr = $kasir->getKasir();
                             <!-- /# card -->
                         </div>
                         <!-- /# column -->
-                    </div>
-                    <!-- /# row -->
-
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="footer">
-                                <p>2021 © X9090</p>
-                            </div>
-                        </div>
                     </div>
                 </section>
             </div>

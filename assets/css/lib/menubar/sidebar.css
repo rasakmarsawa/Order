@@ -56,7 +56,7 @@
     font-size: 14px;
     /* height: 30px; */
     line-height: 40px;
-    color: rgba(160, 180, 200, 0.55);
+    color: #FFFFFF;
     text-transform: capitalize;
     font-weight: normal;
 }
@@ -82,7 +82,7 @@
 .sidebar .nano-content>ul li>a {
     display: block;
     cursor: pointer;
-    color: #BDBDC7;
+    color: #FFFFFF;
     padding: 10px;
     line-height: 30px;
     border-bottom: none;
@@ -94,7 +94,7 @@
 }
 
 .sidebar .nano-content>ul li>a:hover {
-  background: linear-gradient(to right, #5772FE , #6D85FB);
+  background: linear-gradient(to right, #45B649 , #FFFFFF);
 }
 
 .sidebar .nano-content>ul li>a>.sidebar-collapse-icon {
@@ -121,7 +121,7 @@
 }
 
 .sidebar .nano-content>ul li.active>a::before {
-    background: #03A9F5;
+    background: #FFFFFF;
     content: "";
     height: 100%;
     left: 0;
@@ -138,6 +138,7 @@
 .sidebar .nano-content>ul>li.label, .sidebar .nano-content>ul>li.content, .sidebar .nano-content>ul>li>a {
     padding-left: 20px;
     padding-right: 20px;
+    background-color: #45B649;
 }
 
 html.rtl .sidebar .nano-content>ul>li.label, html.rtl .sidebar .nano-content>ul>li.content, html.rtl .sidebar .nano-content>ul>li>a {
@@ -146,7 +147,7 @@ html.rtl .sidebar .nano-content>ul>li.label, html.rtl .sidebar .nano-content>ul>
 }
 
 .sidebar .nano-content>ul>li.active>a, .sidebar .nano-content>ul>li.open>a, .sidebar .nano-content>ul>li>ul {
-    background: linear-gradient(to right, #5772FE , #6D85FB);
+    background: linear-gradient(to right, #45B649 , #FFFFFF);
 }
 
 .sidebar .nano-content>ul>li>ul>li.label, .sidebar .nano-content>ul>li>ul>li.content, .sidebar .nano-content>ul>li>ul>li>a {
@@ -358,6 +359,7 @@ body {
     right: 0;
     bottom: 0;
     left: 0;
+    background-color: #45B649;
 }
 
 .sidebar .nano>.nano-content:focus {

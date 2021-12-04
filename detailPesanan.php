@@ -51,23 +51,39 @@ if (isset($_POST['submit'])) {
                     <div class="row">
                         <!-- /# column -->
                             <div class="card col-lg-12">
-                              <div class="row">
-                                <div class="card-title mb-2">
-                                    <h4>Detail Pesanan </h4>
+                              <div class="card-title">
+                                  <h4>Detail Pesanan </h4>
+                                  <hr>
+                              </div>
+                              <?php if (isset($_GET['Next'])): ?>
+                                <div class="alert alert-success alert-dismissible fade show">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">×</span>
+                                </button>
+                                  Pesanan dilanjutkan. Status pesanan saat ini <?php echo $data0['nama_status'] ?>
                                 </div>
+                              <?php endif; ?>
+                              <?php if (isset($_GET['Nextfail'])): ?>
+                                <div class="alert alert-danger alert-dismissible fade show">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">×</span>
+                                </button>
+                                  Pesanan tidak bisa di proses karena pesanan sudah dibatalkan.
+                                </div>
+                              <?php endif; ?>
+                              <div class="card-subtitle">
+                                <p>
+                                  No Antrian : <?php echo $data0['no'] ?><br>
+                                  Tanggal : <?php echo $data0['tanggal'] ?><br>
+                                  Status Pesanan : <?php echo $data0['nama_status'] ?><br>
+                                  Nama Pelanggan : <?php echo $data0['nama_pelanggan'] ?>
+                                </p>
                               </div>
                               <div class="row">
-                                <div class="col-lg-6">
-                                    <h4 class="card-title"><?php echo $data0['nama_pelanggan'] ?></h4>
-                                    <h6 class="card-subtitle">No Urut <?php echo $data0['no'] ?>/ Rp. <?php echo $data0['total_harga']; ?></h6>
-                                    <h6 class="card-subtitle"><?php echo $data0['tanggal'] ?></h6>
-                                </div>
-                                <div class="col-lg-6">
+
+                                <div class="col-lg-12">
                                   <form class="basic-farm float-right" method="post">
                                     <center>
-                                      <div class="form-group mb-0">
-                                        <label>Status : <?php echo $data0['nama_status'] ?></label>
-                                      </div>
                                       <div>
                                         <?php if ($data0['status']<4 && $_SESSION['admin']!=1): ?>
                                           <button name="submit" type="submit" class="btn btn-primary">
@@ -89,22 +105,6 @@ if (isset($_POST['submit'])) {
                                   </form>
                                 </div>
                               </div>
-                                <?php if (isset($_GET['Next'])): ?>
-                                  <div class="alert alert-success alert-dismissible fade show">
-                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">×</span>
-                                  </button>
-                                    Pesanan dilanjutkan. Status pesanan saat ini <?php echo $data0['nama_status'] ?>
-                                  </div>
-                                <?php endif; ?>
-                                <?php if (isset($_GET['Nextfail'])): ?>
-                                  <div class="alert alert-danger alert-dismissible fade show">
-                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">×</span>
-                                  </button>
-                                    Pesanan tidak bisa di proses karena pesanan sudah dibatalkan.
-                                  </div>
-                                <?php endif; ?>
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <table class="table table-bordered">
@@ -135,15 +135,6 @@ if (isset($_POST['submit'])) {
                             <!-- /# card -->
                         </div>
                         <!-- /# column -->
-                    </div>
-                    <!-- /# row -->
-
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="footer">
-                                <p>2021 © X9090</p>
-                            </div>
-                        </div>
                     </div>
                 </section>
             </div>

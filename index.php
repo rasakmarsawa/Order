@@ -2,10 +2,12 @@
 include 'controller/session.php';
 include 'controller/pesananController.php';
 include 'controller/barangController.php';
+include 'controller/detailPesananController.php';
 
 $session = new session();
 $pesanan = new pesananController();
 $barang = new barangController();
+$detail = new detailPesananController();
 
 if ($session->check()==false) {
   $session->redirect('login.php');
@@ -17,7 +19,33 @@ if(isset($_GET['logout'])){
 }
 
 $data_barang = $barang->getBarangSaleToday();
-$data_pesanan = count($pesanan->getPesananToday());
+
+//graph pemasukan
+$pesanan_harian = $pesanan->getPesananHarian();
+$today = $pesanan_harian['today'];
+
+$dataPemasukan = array();
+$i = 0;
+foreach ($pesanan_harian['all'] as $key => $value) {
+  $dataPemasukan[$i]=[
+    'x' => $value['timestamp'],
+    'y' => $value['total_harian']
+  ];
+  $i = $i + 1;
+}
+
+//graph barang terjual
+$barang_terjual = $detail->getDetailByBarangTerjual();
+
+$dataBarangTerjual = array();
+$i = 0;
+foreach ($barang_terjual as $key => $value) {
+  $dataBarangTerjual[$i]=[
+    'label' => $value['nama_barang'],
+    'y' => $value['jumlah_barang']
+  ];
+  $i = $i + 1;
+}
 ?>
 
 <?php include 'include/head.php' ?>
@@ -28,16 +56,31 @@ $data_pesanan = count($pesanan->getPesananToday());
                 <!-- /# row -->
                 <section id="main-content">
                     <div class="row">
-                      <div class="col-lg-3">
-                        <div class="card bg-primary">
+                      <div class="col-lg-6">
+                        <div class="card bg-success">
                           <div class="stat-widget-six">
                             <div class="stat-icon">
                               <i class="ti-stats-up"></i>
                             </div>
                             <div class="stat-content">
                               <div class="text-left dib">
-                                <div class="stat-heading">Penjualan Harian</div>
-                                <div class="stat-text"><?php echo $data_pesanan; ?> Pesanan</div>
+                                <div class="stat-heading">Pesanan Harian</div>
+                                <div class="stat-text"><?php echo $today['jumlah_pesanan']; ?> Pesanan</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="card bg-success">
+                          <div class="stat-widget-six">
+                            <div class="stat-icon">
+                              <i class="ti-stats-up"></i>
+                            </div>
+                            <div class="stat-content">
+                              <div class="text-left dib">
+                                <div class="stat-heading">Pemasukan Harian</div>
+                                <div class="stat-text">Rp. <?php echo $today['total_harian']; ?>,-  </div>
                               </div>
                             </div>
                           </div>
@@ -45,47 +88,75 @@ $data_pesanan = count($pesanan->getPesananToday());
                       </div>
                     </div>
                     <div class="row"`style="position:fixed;bottom:0">
-                        <div class="col-lg-12">
-                            <div class="card">
-                                <div class="card-title pr">
-                                    <h4>Jumlah Barang Terjual Hari Ini</h4>
-                                </div>
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table student-data-table m-t-20">
-                                            <thead>
-                                                <tr>
-                                                    <th>Nama Barang</th>
-                                                    <th>Jumlah Terjual Hari Ini</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                              <?php foreach ($data_barang as $key => $value): ?>
-                                                <tr>
-                                                  <td><?php echo $value['nama_barang'] ?></td>
-                                                  <td><?php echo $value['jumlah_barang'] ?></td>
-                                                </tr>
-                                              <?php endforeach; ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                        <!-- /# column -->
+                        <div class="col-lg-6">
+                          <div class="card">
+                            <div class="card-title">
+                              <h4>Jumlah Barang Terjual Tahunan</h4>
+                              <hr>
                             </div>
+                            <div class="flot-container">
+                              <div id="barang_terjual" class="flot-line"></div>
+                            </div>
+                          </div>
+                          <!-- /# card -->
+                        </div>
+                        <!-- /# column -->
+                        <div class="col-lg-6">
+                          <div class="card">
+                            <div class="card-title">
+                              <h4>Pemasukan Harian</h4>
+                              <hr>
+                            </div>
+                            <div class="flot-container">
+                              <div id="pemasukan" class="flot-line"></div>
+                            </div>
+                          </div>
+                          <!-- /# card -->
                         </div>
                         <!-- /# column -->
                     </div>
                     <!-- /# row -->
-
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="footer">
-                                <p>2021 © X9090</p>
-                            </div>
-                        </div>
-                    </div>
                 </section>
             </div>
         </div>
     </div>
 
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+    <script>
+    window.onload = function () {
+
+    var pemasukan = new CanvasJS.Chart("pemasukan", {
+      animationEnabled: true,
+      axisY: {
+        title: "Pemasukan harian",
+        suffix: ",-",
+        prefix: "Rp. "
+      },
+      data: [{
+        type: "spline",
+        markerSize: 10,
+        xValueFormatString: "DD-MM-YYYY",
+        yValueFormatString: "Rp#,##0.-",
+        xValueType: "dateTime",
+        dataPoints: <?php echo json_encode($dataPemasukan, JSON_NUMERIC_CHECK); ?>
+      }]
+    });
+
+    pemasukan.render();
+
+    var barang_terjual = new CanvasJS.Chart("barang_terjual", {
+    	theme: "light1", // "light2", "dark1", "dark2"
+    	animationEnabled: true, // change to true
+    	data: [
+    	{
+    		type: "column",
+    		dataPoints: <?php echo json_encode($dataBarangTerjual, JSON_NUMERIC_CHECK); ?>
+    	}]
+    });
+    barang_terjual.render();
+
+    }
+    </script>
 <?php include 'include/foot.php' ?>

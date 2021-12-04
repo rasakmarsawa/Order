@@ -29,15 +29,7 @@ if ($session->check()==true) {
 
     <!-- ================= Favicon ================== -->
     <!-- Standard -->
-    <link rel="shortcut icon" href="http://placehold.it/64.png/000/fff">
-    <!-- Retina iPad Touch Icon-->
-    <link rel="apple-touch-icon" sizes="144x144" href="http://placehold.it/144.png/000/fff">
-    <!-- Retina iPhone Touch Icon-->
-    <link rel="apple-touch-icon" sizes="114x114" href="http://placehold.it/114.png/000/fff">
-    <!-- Standard iPad Touch Icon-->
-    <link rel="apple-touch-icon" sizes="72x72" href="http://placehold.it/72.png/000/fff">
-    <!-- Standard iPhone Touch Icon-->
-    <link rel="apple-touch-icon" sizes="57x57" href="http://placehold.it/57.png/000/fff">
+    <link rel="shortcut icon" href="images/ic_fried_rice.png">
 
     <!-- Styles -->
     <link href="assets/css/lib/font-awesome.min.css" rel="stylesheet">
@@ -47,16 +39,19 @@ if ($session->check()==true) {
     <link href="assets/css/style.css" rel="stylesheet">
 </head>
 
-<body class="bg-primary">
+<body class="bg-theme">
 
     <div class="unix-login">
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-lg-6">
                     <div class="login-content">
+                        <div class="login-logo">
+                          <span>Trisha</span>
+                        </div>
                         <div class="login-form">
-                            <h4>Login Kasir</h4>
-
+                              <h4>Login Kasir</h4>
+                              <hr>
                             <?php if (isset($_GET['login_fail'])): ?>
                               <div class="alert alert-danger">
       												  Login Gagal, Silahkan Coba Lagi
@@ -72,7 +67,7 @@ if ($session->check()==true) {
                                     <label>Password</label>
                                     <input name="password" type="password" class="form-control" placeholder="Password">
                                 </div>
-                                <button name="submit" type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30">Masuk</button>
+                                <button name="submit" type="submit" class="btn btn-primary btn-flat m-b-5 m-t-5">Masuk</button>
                             </form>
                         </div>
                     </div>

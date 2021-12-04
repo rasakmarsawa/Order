@@ -17,6 +17,7 @@ $arr = $barang->getBarang();
 
 if (isset($_POST['submit'])) {
   $data = $pesanan->addPesananGuess($_POST,$arr);
+  print_r($data);
   if ($data['dataPesanan']['total_harga']!=0) {
     $pesanan->api_addPesanan($data['dataPesanan']);
     $detailPesanan->api_addDetailPesanan($data['dataDetail']);
@@ -36,8 +37,9 @@ if (isset($_POST['submit'])) {
                     <div class="row">
                         <!-- /# column -->
                             <div class="card col-lg-12">
-                                <div class="card-title mb-2">
+                                <div class="card-title">
                                     <h4>Buat Pesanan Baru</h4>
+                                    <hr>
                                 </div>
                                 <div class="card-body">
                                   <form method="post">
@@ -76,15 +78,6 @@ if (isset($_POST['submit'])) {
                             <!-- /# card -->
                         </div>
                         <!-- /# column -->
-                    </div>
-                    <!-- /# row -->
-
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="footer">
-                                <p>2021 © X9090</p>
-                            </div>
-                        </div>
                     </div>
                 </section>
             </div>
