@@ -18,8 +18,6 @@ if(isset($_GET['logout'])){
   $session->redirect('login.php');
 }
 
-$data_barang = $barang->getBarangSaleToday();
-
 //graph pemasukan
 $pesanan_harian = $pesanan->getPesananHarian();
 $today = $pesanan_harian['today'];

@@ -9,15 +9,23 @@ class statusAntrianController
 
   function getLastStatus(){
     $sql = "
-    select status
-    from status_antrian
-    where
-      tanggal + interval 28 hour >= getNow() and 
-      no = (
-        select max(no)
-        from status_antrian
-        where tanggal + interval 28 hour >= getNow()
-      )";
+      SELECT *
+      FROM status_antrian
+      WHERE tanggal = (
+          SELECT MAX(tanggal)
+          FROM status_antrian
+          WHERE tanggal + INTERVAL 28 HOUR >= getNOW()
+      	)
+      AND no = (
+          SELECT MAX(no)
+          FROM status_antrian
+          WHERE tanggal = (
+              SELECT MAX(tanggal)
+              FROM status_antrian
+              WHERE tanggal + INTERVAL 28 HOUR >= getNOW()
+          	)
+      	)
+    ";
     $result = $GLOBALS['mysqli']->query($sql);
 
     if (mysqli_num_rows($result)==1) {

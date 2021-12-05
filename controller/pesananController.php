@@ -207,6 +207,15 @@ class pesananController
   }
 
   function getPesananHarian(){
+    $sql = "select DATE(getNow()) as today";
+    $today = $GLOBALS['mysqli']->query($sql);
+    $day = ['today'=>null];
+    if (mysqli_num_rows($today)==1) {
+      $x = mysqli_fetch_assoc($today);
+      $day['today'] = $x['today'];
+    }
+
+
     $sql = "
     select
       tanggal,
@@ -232,7 +241,7 @@ class pesananController
     $i=0;
     while ($data = mysqli_fetch_assoc($result)) {
       $arr[$i]=$data;
-      if ($data['tanggal']==date("Y-m-d")) {
+      if ($data['tanggal']==$day['today']) {
         $today = [
           'tanggal' => $data['tanggal'],
           'timestamp' => $data['timestamp'],
