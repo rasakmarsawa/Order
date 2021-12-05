@@ -9,21 +9,6 @@ class userController
 
   }
 
-  function getKasir(){
-  }
-
-  function addKasir(){
-
-  }
-
-  function deleteKasir(){
-
-  }
-
-  function getKasirById(){
-
-  }
-
   function login($username,$password){
     $sql = "select * from kasir where username = '".$username."' and password = md5('".$password."')";
     $result = $GLOBALS['mysqli']->query($sql);
@@ -37,10 +22,6 @@ class userController
     $GLOBALS['mysqli']->close();
 
     return $data;
-  }
-
-  function checkAdmin(){
-
   }
 }
 

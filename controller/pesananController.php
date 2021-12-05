@@ -36,7 +36,7 @@ class pesananController
     FROM pesanan
     INNER JOIN pelanggan ON pesanan.id_pelanggan = pelanggan.username
     INNER JOIN status_pesanan ON pesanan.status = status_pesanan.id_status
-    WHERE tanggal = current_date and pesanan.status<4";
+    WHERE tanggal = DATE(getNow()) and pesanan.status<4";
     $result = $GLOBALS['mysqli']->query($sql);
 
     $arr = array();
@@ -78,7 +78,7 @@ class pesananController
   }
 
   function getPesananToday(){
-    $sql = "select * from pesanan where tanggal = current_date and status = 4";
+    $sql = "select * from pesanan where tanggal = DATE(getNow()) and status = 4";
 
     $result = $GLOBALS['mysqli']->query($sql);
 
@@ -99,7 +99,7 @@ class pesananController
       `id_pelanggan`
       )
     values (
-      current_date,
+      DATE(getNow()),
       ".$post['total_harga'].",
       '".$post['id_pelanggan']."'
     )";

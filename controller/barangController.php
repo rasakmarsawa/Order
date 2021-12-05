@@ -58,7 +58,7 @@ class barangController
   }
 
   function getBarangSaleToday(){
-    $sql = "select barang.nama_barang,sum(detail_pesanan.jumlah_barang) as jumlah_barang from barang inner join detail_pesanan on barang.id_barang = detail_pesanan.id_barang inner join pesanan on detail_pesanan.tanggal = pesanan.tanggal and detail_pesanan.no = pesanan.no where detail_pesanan.tanggal = current_date and pesanan.status = 4  group by barang.id_barang";
+    $sql = "select barang.nama_barang,sum(detail_pesanan.jumlah_barang) as jumlah_barang from barang inner join detail_pesanan on barang.id_barang = detail_pesanan.id_barang inner join pesanan on detail_pesanan.tanggal = pesanan.tanggal and detail_pesanan.no = pesanan.no where detail_pesanan.tanggal = DATE(getNow()) and pesanan.status = 4  group by barang.id_barang";
 
     $result = $GLOBALS['mysqli']->query($sql);
 
