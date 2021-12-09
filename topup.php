@@ -34,15 +34,15 @@ if ($session->checkAdmin()==true) {
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                               <span aria-hidden="true">×</span>
                             </button>
-                              Username tidak ditemukan.
+                              Kode pelanggan tidak ditemukan.
                             </div>
                           <?php endif; ?>
                           <div class="card-body">
                               <div class="basic-form">
                                   <form method="post">
                                       <div class="form-group">
-                                          <label>Username Pelanggan</label>
-                                          <input name="username" class="form-control" placeholder="Username Pelanggan" maxlength="50">
+                                          <label>Kode Pelanggan</label>
+                                          <input name="username" class="form-control" placeholder="Kode Pelanggan" maxlength="50">
                                       </div>
                                       <button name="submit" type="submit" class="btn btn-primary">Submit</button>
                                   </form>

@@ -62,7 +62,7 @@ foreach ($barang_terjual as $key => $value) {
                             </div>
                             <div class="stat-content">
                               <div class="text-left dib">
-                                <div class="stat-heading">Pesanan Harian</div>
+                                <div class="stat-heading">Pesanan Hari Ini</div>
                                 <div class="stat-text"><?php echo $today['jumlah_pesanan']; ?> Pesanan</div>
                               </div>
                             </div>
@@ -77,7 +77,7 @@ foreach ($barang_terjual as $key => $value) {
                             </div>
                             <div class="stat-content">
                               <div class="text-left dib">
-                                <div class="stat-heading">Pemasukan Harian</div>
+                                <div class="stat-heading">Pemasukan Hari Ini</div>
                                 <div class="stat-text">Rp. <?php echo $today['total_harian']; ?>,-  </div>
                               </div>
                             </div>
@@ -90,7 +90,7 @@ foreach ($barang_terjual as $key => $value) {
                         <div class="col-lg-6">
                           <div class="card">
                             <div class="card-title">
-                              <h4>Jumlah Barang Terjual Tahunan</h4>
+                              <h4>Jumlah Barang Terjual Bulanan</h4>
                               <hr>
                             </div>
                             <div class="flot-container">

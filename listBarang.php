@@ -50,31 +50,31 @@ $arr = $barang->getBarang();
                                       Barang berhasil dihapus.
                                     </div>
                                   <?php endif; ?>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Nama Barang</th>
-                                                    <th>Harga</th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
+                                    <div class="bootstrap-data-table-panel">
+                                        <div class="table-responsive">
+                                            <table id="row-select" class="display table table-borderd table-hover">
+                                              <thead>
+                                                  <tr>
+                                                      <th>#</th>
+                                                      <th>Nama Barang</th>
+                                                      <th></th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody>
 
-                                              <?php
-                                              $i=1;
-                                              foreach ($arr as $key => $value): ?>
-                                                <tr>
-                                                    <th scope="row"><?php echo $i ?></th>
-                                                    <td><?php echo $value['nama_barang'] ?></td>
-                                                    <td><?php echo "Rp. ".$value['harga'] ?></td>
-                                                    <td><center><a type="button" class="btn btn-primary" href="detailBarang.php?id=<?php echo $value['id_barang'] ?>">Detail</a></center></td>
-                                                </tr>
-                                              <?php $i++;
-                                            endforeach; ?>
-                                            </tbody>
-                                        </table>
+                                                <?php
+                                                $i=1;
+                                                foreach ($arr as $key => $value): ?>
+                                                  <tr>
+                                                      <th scope="row"><?php echo $i ?></th>
+                                                      <td><?php echo $value['nama_barang'] ?></td>
+                                                      <td><center><a type="button" class="btn btn-primary" href="detailBarang.php?id=<?php echo $value['id_barang'] ?>">Detail</a></center></td>
+                                                  </tr>
+                                                <?php $i++;
+                                              endforeach; ?>
+                                              </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

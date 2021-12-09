@@ -106,8 +106,9 @@ $activity = $pelanggan->getActivity($_GET['id']);
                                       <h4>Aktifitas Pelanggan</h4>
                                       <hr>
                                   </div>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered">
+                                  <div class="bootstrap-data-table-panel">
+                                      <div class="table-responsive">
+                                          <table id="row-select" class="display table table-borderd table-hover">
                                             <thead>
                                                 <tr>
                                                     <th>Tanggal</th>
@@ -131,8 +132,9 @@ $activity = $pelanggan->getActivity($_GET['id']);
                                                 </tr>
                                               <?php endforeach; ?>
                                             </tbody>
-                                        </table>
-                                    </div>
+                                          </table>
+                                      </div>
+                                  </div>
                                 </div>
                             </div>
                             <!-- /# card -->

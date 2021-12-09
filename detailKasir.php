@@ -69,8 +69,9 @@ $data1 = $topup->getTopupByKasir($_GET['id']);
                                   <h4>Aktivitas Topup</h4>
                                   <hr>
                                 </div>
-                                  <div class="table-responsive">
-                                      <table class="table table-bordered">
+                                <div class="bootstrap-data-table-panel">
+                                    <div class="table-responsive">
+                                        <table id="row-select" class="display table table-borderd table-hover">
                                           <thead>
                                               <tr>
                                                   <th>Tanggal</th>
@@ -88,8 +89,15 @@ $data1 = $topup->getTopupByKasir($_GET['id']);
                                               </tr>
                                             <?php endforeach; ?>
                                           </tbody>
-                                      </table>
-                                  </div>
+                                          <tfoot>
+                                            <tr>
+                                              <th>Tanggal</th>
+                                              <th>Pembeli</th>
+                                            </tr>
+                                          </tfoot>
+                                        </table>
+                                    </div>
+                                </div>                                  
                               </div>
                             </div>
                             <!-- /# card -->

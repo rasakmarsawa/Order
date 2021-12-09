@@ -106,13 +106,16 @@ if (isset($_POST['submit'])) {
                                 </div>
                               </div>
                                 <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered">
+                                  <div class="bootstrap-data-table-panel">
+                                      <div class="table-responsive">
+                                          <table id="row-select" class="display table table-borderd table-hover">
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
                                                     <th>Nama Barang</th>
+                                                    <th>Harga</th>
                                                     <th>Jumlah</th>
+                                                    <th>Total</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -123,13 +126,16 @@ if (isset($_POST['submit'])) {
                                                 <tr>
                                                     <th scope="row"><?php echo $i ?></th>
                                                     <td><?php echo $value['nama_barang'] ?></td>
+                                                    <td><?php echo 'Rp. '.$value['harga'].',-' ?></td>
                                                     <td><?php echo $value['jumlah_barang'] ?></td>
+                                                    <td><?php echo 'Rp. '.$value['harga']*$value['jumlah_barang'].',-' ?></td>
                                                 </tr>
                                               <?php $i++;
                                             endforeach; ?>
                                             </tbody>
-                                        </table>
-                                    </div>
+                                          </table>
+                                      </div>
+                                  </div>
                                 </div>
                             </div>
                             <!-- /# card -->

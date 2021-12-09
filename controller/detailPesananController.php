@@ -8,11 +8,10 @@ class detailPesananController
   function __construct(){}
 
   function getDetailPesananByPesanan($post){
-    $sql = "SELECT detail_pesanan.*, barang.nama_barang, barang.harga
+    $sql = "SELECT *
     FROM detail_pesanan
-    INNER JOIN barang ON detail_pesanan.id_barang = barang.id_barang
     WHERE tanggal = '".$post['tanggal']."' AND no = ".$post['no']."
-    ORDER BY barang.nama_barang desc";
+    ORDER BY nama_barang desc";
     $result = $GLOBALS['mysqli']->query($sql);
 
     $arr = array();
@@ -61,7 +60,9 @@ class detailPesananController
         pesanan.no = detail_pesanan.no
     INNER JOIN barang ON
     	barang.id_barang = detail_pesanan.id_barang
-    WHERE YEAR(pesanan.tanggal) = YEAR(getNow())
+    WHERE
+      YEAR(pesanan.tanggal) = YEAR(getNow()) AND
+      MONTH(pesanan.tanggal) = MONTH(getNow())
     GROUP BY detail_pesanan.id_barang
     ";
 

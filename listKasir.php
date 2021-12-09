@@ -50,8 +50,9 @@ $arr = $kasir->getKasir();
                                       Kasir berhasil dihapus.
                                     </div>
                                   <?php endif; ?>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered">
+                                  <div class="bootstrap-data-table-panel">
+                                      <div class="table-responsive">
+                                          <table id="row-select" class="display table table-borderd table-hover">
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
@@ -80,8 +81,9 @@ $arr = $kasir->getKasir();
                                               <?php $i++;
                                             endforeach; ?>
                                             </tbody>
-                                        </table>
-                                    </div>
+                                          </table>
+                                      </div>
+                                  </div>
                                 </div>
                             </div>
                             <!-- /# card -->

@@ -6,7 +6,7 @@ $session = new session();
 $barang = new barangController();
 
 if (isset($_POST['submit'])) {
-  $result = $barang->addBarang($_POST['nama'],$_POST['harga']);
+  $result = $barang->addBarang(trim($_POST['nama']),$_POST['harga']);
   if ($result) {
     $session->redirect('listBarang.php?add');
   }else{

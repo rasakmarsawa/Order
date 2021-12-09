@@ -58,7 +58,7 @@ $detail = $barang->getDetailBarang($_GET['id']);
                                   <a type="button" class="btn btn-primary mr-1" href="ubahBarang.php?id=<?php echo $data['id_barang'] ?>">Ubah</a>
                                 </div>
                               </div>
-                                <div class="card-body">
+                                <!-- <div class="card-body">
                                   <div class="card-title mb-2">
                                       <h4>Penjualan Barang</h4>
                                       <hr>
@@ -92,7 +92,7 @@ $detail = $barang->getDetailBarang($_GET['id']);
                                             </table>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                             <!-- /# card -->
                         </div>
