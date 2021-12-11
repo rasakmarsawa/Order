@@ -10,6 +10,7 @@
 	include 'detailPesananController.php';
 	include 'notification.php';
 	include 'email.php';
+	include 'configController.php';
 
 	//function validating all the paramters are available
 	//we will pass the required parameters to this function
@@ -151,6 +152,19 @@
 					if ($result2) {
 						$response['error'] = 'E50';
 						$response['message'] = 'Proses Sukses';
+
+						$config = new configController();
+						$data = $config->getConfig('fcm_token');
+						$token = $data['value'];
+						pushNotification(
+							1,
+							$token,
+							"Pesanan baru",
+							"Ada pesanan baru dari pelanggan",
+							null,
+							null,
+							null
+						);
 					}else {
 						$response['error'] = 'E52';
 						$response['message'] = 'Gagal Menambahkan Item Pesanan';

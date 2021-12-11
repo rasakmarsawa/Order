@@ -28,6 +28,12 @@
       document.getElementById('row-select_wrapper').childNodes[1].setAttribute('class','col-lg-12');
   }
 </script>
+
+<!-- FCM Init -->
+<script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-messaging.js"></script>
+<script src="assets/js/fcm_init.js"></script>
+
 </body>
 
 </html>
