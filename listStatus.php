@@ -58,7 +58,7 @@ $arr = $spesanan->getStatusPesanan();
                                                     <th scope="row"><?php echo $i ?></th>
                                                     <td><?php echo $value['nama_status'] ?></td>
                                                     <td><?php echo $value['message'] ?></td>
-                                                    <td><center><a type="button" class="btn btn-primary" href="ubahStatus.php?id=<?php echo $value['id_status'] ?>">Update</a></center></td>
+                                                    <td><center><a type="button" class="btn btn-primary" href="ubahStatus.php?id=<?php echo $value['id_status'] ?>">Ubah</a></center></td>
                                                 </tr>
                                               <?php $i++;
                                             endforeach; ?>

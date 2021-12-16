@@ -17,11 +17,15 @@ $data = $spesanan->getStatusPesananById($_GET['id']);
 
 if (isset($_POST['submit'])) {
   $_POST['id_status']=$_GET['id'];
-  $result = $spesanan->updateStatusPesanan($_POST);
-  if ($result) {
-    $session->redirect('listStatus.php?update');
+  if ($session->emptyCheck($_POST,array('submit','message'))) {
+    $result = $spesanan->updateStatusPesanan($_POST);
+    if ($result) {
+      $session->redirect('listStatus.php?update');
+    }else{
+      $session->redirect('ubahStatus.php?id='.$_GET['id'].'&fail');
+    }
   }else{
-    $session->redirect('ubahStatus.php?id='.$_GET['id'].'&fail');
+    $session->redirect('ubahStatus.php?id='.$_GET['id'].'&empty');
   }
 }
 ?>
@@ -47,16 +51,24 @@ if (isset($_POST['submit'])) {
                               Merubah data status pesanan tidak berhasil.
                             </div>
                           <?php endif; ?>
+                          <?php if (isset($_GET['empty'])): ?>
+                            <div class="alert alert-danger alert-dismissible fade show">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                            </button>
+                              Nama status tidak boleh dikosongkan.
+                            </div>
+                          <?php endif; ?>
                           <div class="card-body">
                               <div class="basic-form">
                                   <form method="post">
                                       <div class="form-group">
                                           <label>Nama Status</label>
-                                          <input name="nama_status" type="nama" class="form-control" placeholder="Nama Status" maxlength="50" value="<?php echo $data['nama_status'] ?>">
+                                          <input name="nama_status" class="form-control" placeholder="Nama Status" maxlength="50" value="<?php echo $data['nama_status'] ?>">
                                       </div>
                                       <div class="form-group">
                                           <label>Message</label>
-                                          <input name="message" type="harga" class="form-control" placeholder="Message" maxlength="200" value="<?php echo $data['message'] ?>">
+                                          <input name="message" class="form-control" placeholder="Message" maxlength="200" value="<?php echo $data['message'] ?>">
                                       </div>
                                       <button name="submit" type="submit" class="btn btn-primary">Submit</button>
                                   </form>

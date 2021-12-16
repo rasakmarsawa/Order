@@ -9,11 +9,15 @@ $data = $barang->getBarangById($_GET['id']);
 
 if (isset($_POST['submit'])) {
   $_POST['id']=$_GET['id'];
-  $result = $barang->updateBarang($_POST);
-  if ($result) {
-    $session->redirect('detailBarang.php?id='.$_GET['id'].'&update');
+  if ($session->emptyCheck($_POST,array('submit'))) {
+    $result = $barang->updateBarang($_POST);
+    if ($result) {
+      $session->redirect('detailBarang.php?id='.$_GET['id'].'&update');
+    }else{
+      $session->redirect('ubahBarang.php?id='.$_GET['id'].'&fail');
+    }
   }else{
-    $session->redirect('ubahBarang.php?id='.$_GET['id'].'&fail');
+    $session->redirect('ubahBarang.php?id='.$_GET['id'].'&empty');
   }
 }
 
@@ -49,6 +53,14 @@ if ($session->checkAdmin()==false) {
                                     Merubah data barang tidak berhasil.
                                   </div>
                                 <?php endif; ?>
+                                <?php if (isset($_GET['empty'])): ?>
+                                  <div class="alert alert-danger alert-dismissible fade show">
+                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                  </button>
+                                    Input data tidak boleh kosong.
+                                  </div>
+                                <?php endif; ?>
                                 <div class="card-body">
                                     <div class="basic-form">
                                         <form method="post">
@@ -67,7 +79,7 @@ if ($session->checkAdmin()==false) {
                             </div>
                         </div>
                         <!-- /# column -->
-                    </div>                    
+                    </div>
                 </section>
             </div>
         </div>

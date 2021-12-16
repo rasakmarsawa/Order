@@ -6,11 +6,15 @@ $session = new session();
 $barang = new barangController();
 
 if (isset($_POST['submit'])) {
-  $result = $barang->addBarang(trim($_POST['nama']),$_POST['harga']);
-  if ($result) {
-    $session->redirect('listBarang.php?add');
-  }else{
-    $session->redirect('?fail');
+  if ($session->emptyCheck($_POST,array('submit'))) {
+    $result = $barang->addBarang(trim($_POST['nama']),$_POST['harga']);
+    if ($result) {
+      $session->redirect('listBarang.php?add');
+    }else{
+      $session->redirect('?fail');
+    }
+  }else {
+    $session->redirect('?empty');
   }
 }
 
@@ -43,7 +47,15 @@ if ($session->checkAdmin()==false) {
                                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">×</span>
                                   </button>
-                                    Tambah data tidak berhasil. Nama barang sudah digunakan.
+                                    Tambah data tidak berhasil.
+                                  </div>
+                                <?php endif; ?>
+                                <?php if (isset($_GET['empty'])): ?>
+                                  <div class="alert alert-danger alert-dismissible fade show">
+                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                  </button>
+                                    Data input tidak boleh kosong.
                                   </div>
                                 <?php endif; ?>
                                 <div class="card-body">

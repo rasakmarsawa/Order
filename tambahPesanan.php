@@ -22,6 +22,8 @@ if (isset($_POST['submit'])) {
     $detailPesanan->api_addDetailPesanan($data['dataDetail']);
 
     $session->redirect('antrian.php');
+  }else{
+    $session->redirect('tambahPesanan.php?empty');
   }
 }
 ?>
@@ -41,6 +43,14 @@ if (isset($_POST['submit'])) {
                                     <hr>
                                 </div>
                                 <div class="card-body">
+                                  <?php if (isset($_GET['empty'])): ?>
+                                    <div class="alert alert-danger alert-dismissible fade show">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                      <span aria-hidden="true">×</span>
+                                    </button>
+                                      Tidak ada barang yang dipesan.
+                                    </div>
+                                  <?php endif; ?>
                                   <form method="post">
                                     <div class="float-right">
                                       <button type="submit" name="submit" class="btn btn-primary">Buat Pesanan</button>
