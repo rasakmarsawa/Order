@@ -141,6 +141,9 @@ class pelangganController
   }
 
   function makeRequest($post,$request_type){
+
+    $this->clearExpiredRequest();
+
     $sql = "update pelanggan set
     request_create = current_timestamp,
     request_type = '".$request_type."',
@@ -167,6 +170,27 @@ class pelangganController
 
     $result = false;
     if (mysqli_affected_rows($GLOBALS['mysqli'])==1) {
+      $result = true;
+    }
+
+    return $result;
+  }
+
+  function clearExpiredRequest(){
+    $sql = "update pelanggan
+    set
+      request_create = null,
+      request_type = null,
+      request_key = null
+    where
+      request_create + interval 5 minute < getNow() and
+      verify_status = 1
+    ";
+
+    $GLOBALS['mysqli']->query($sql);
+
+    $result = false;
+    if (mysqli_affected_rows($GLOBALS['mysqli'])!=0) {
       $result = true;
     }
 
