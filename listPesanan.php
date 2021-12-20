@@ -1,9 +1,9 @@
 <?php
 include 'controller/session.php';
-include 'controller/pesananController.php';
+include 'model/pesanan.php';
 
 $session = new session();
-$pesanan = new pesananController();
+$pesanan = new pesanan();
 
 if ($session->check()==false) {
   $session->redirect('login.php');
@@ -72,7 +72,7 @@ $data = $pesanan->getPesanan();
                         </div>
                         <!-- /# column -->
                     </div>
-                    <!-- /# row -->                    
+                    <!-- /# row -->
                 </section>
             </div>
         </div>

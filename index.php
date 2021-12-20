@@ -1,13 +1,13 @@
 <?php
 include 'controller/session.php';
-include 'controller/pesananController.php';
-include 'controller/barangController.php';
-include 'controller/detailPesananController.php';
+include 'model/pesanan.php';
+include 'model/barang.php';
+include 'model/detailPesanan.php';
 
 $session = new session();
-$pesanan = new pesananController();
-$barang = new barangController();
-$detail = new detailPesananController();
+$pesanan = new pesanan();
+$barang = new barang();
+$detail = new detailPesanan();
 
 if ($session->check()==false) {
   $session->redirect('login.php');

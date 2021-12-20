@@ -1,11 +1,11 @@
 <?php
 include 'controller/session.php';
-include 'controller/pelangganController.php';
-include 'controller/topupController.php';
+include 'model/pelanggan.php';
+include 'model/topup.php';
 
 $session = new session();
-$pelanggan = new pelangganController();
-$topup = new topupController();
+$pelanggan = new pelanggan();
+$topup = new topup();
 
 if ($session->check()==false) {
   $session->redirect('login.php');

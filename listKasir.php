@@ -1,9 +1,9 @@
 <?php
 include 'controller/session.php';
-include 'controller/kasirController.php';
+include 'model/kasir.php';
 
 $session = new session();
-$kasir = new kasirController();
+$kasir = new kasir();
 
 if ($session->check()==false) {
   $session->redirect('login.php');

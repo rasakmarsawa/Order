@@ -2,7 +2,7 @@
 /**
  *
  */
-class barangController
+class barang
 {
 
   function __construct(){
@@ -55,7 +55,7 @@ class barangController
     $result = $GLOBALS['mysqli']->query($sql);
 
     return $result;
-  }  
+  }
 
   function getDetailBarang($id){
     $sql = "select * from barang inner join detail_pesanan on detail_pesanan.id_barang = barang.id_barang inner join pesanan on pesanan.tanggal = detail_pesanan.tanggal and pesanan.no = detail_pesanan.no inner join pelanggan on pesanan.id_pelanggan = pelanggan.username where pesanan.status = 4 and barang.id_barang = ".$id;

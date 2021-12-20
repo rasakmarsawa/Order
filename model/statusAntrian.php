@@ -2,7 +2,7 @@
 /**
  *
  */
-class statusAntrianController
+class statusAntrian
 {
 
   function __construct(){}

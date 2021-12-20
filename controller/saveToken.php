@@ -1,8 +1,8 @@
 <?php
 include 'connection.php';
-include 'configController.php';
+include '../model/config.php';
 if (isset($_POST['fcm_token'])) {
-  $config = new configController();
+  $config = new config();
   $result = $config->changeConfig('fcm_token', $_POST['fcm_token']);
   if ($result['status']) {
     $data = [

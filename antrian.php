@@ -1,14 +1,14 @@
 <?php
 include 'controller/session.php';
-include 'controller/pesananController.php';
-include 'controller/statusAntrianController.php';
-include 'controller/pelangganController.php';
 include 'controller/notification.php';
+include 'model/pesanan.php';
+include 'model/statusAntrian.php';
+include 'model/pelanggan.php';
 
 $session = new session();
-$pesanan = new pesananController();
-$status = new statusAntrianController();
-$pelanggan = new pelangganController();
+$pesanan = new pesanan();
+$status = new statusAntrian();
+$pelanggan = new pelanggan();
 
 
 if ($session->check()==false) {

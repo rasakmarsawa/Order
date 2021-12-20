@@ -2,7 +2,7 @@
 /**
  *
  */
-class pelangganController
+class pelanggan
 {
   function __construct(){}
 

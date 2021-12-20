@@ -3,14 +3,14 @@
 	//getting the dboperation class
 	require_once 'connection.php';
 
-  include 'pelangganController.php';
-	include 'barangController.php';
-	include 'pesananController.php';
-	include 'statusAntrianController.php';
-	include 'detailPesananController.php';
 	include 'notification.php';
 	include 'email.php';
-	include 'configController.php';
+  include './model/pelanggan.php';
+	include './model/barang.php';
+	include './model/pesanan.php';
+	include './model/statusAntrian.php';
+	include './model/detailPesanan.php';
+	include './model/config.php';
 
 	//function validating all the paramters are available
 	//we will pass the required parameters to this function
@@ -48,7 +48,7 @@
 				$_POST = json_decode($_POST['data'],true);
 				isTheseParametersAvailable(array('username','nama_pelanggan','password','email','no_hp'));
 
-        $pelanggan = new pelangganController();
+        $pelanggan = new pelanggan();
 				//clear unveryfied account
 				$pelanggan->clearUnveryfied();
 
@@ -70,7 +70,7 @@
 				$_POST = json_decode($_POST['data'],true);
 				isTheseParametersAvailable(array('username','password'));
 
-				$pelanggan = new pelangganController();
+				$pelanggan = new pelanggan();
 				$result = $pelanggan->login($_POST);
 
 				if($result['found']){
@@ -110,7 +110,7 @@
 				$_POST = json_decode($_POST['data'],true);
 				isTheseParametersAvailable(array('username'));
 
-				$pelanggan = new pelangganController();
+				$pelanggan = new pelanggan();
 				$result = $pelanggan->getPelangganByUsername($_POST['username']);
 
 				if($result['found']){
@@ -124,7 +124,7 @@
 				}
 			break;
 			case 'get_barang'://3
-				$barang = new BarangController();
+				$barang = new Barang();
 				$result = $barang->api_getBarang();
 				if ($result['empty']) {
 					$response['error'] = 'E41';
@@ -136,24 +136,24 @@
 				}
 				break;
 			case 'get_status_antrian'://4
-				$status = new statusAntrianController();
+				$status = new statusAntrian();
 				$response['data'] = $status->api_getLastStatus();;
 				break;
 			//--add_pesanan--
 			case 'add_pesanan'://5
 				$_POST = json_decode($_POST['data'],true);
 				$_POST['tanggal'] = date("Y-m-d",strtotime("now"));
-				$pesanan = new pesananController();
+				$pesanan = new pesanan();
 				$result = $pesanan->api_addPesanan($_POST);
 				if ($result) {
 					// addPesanan true
-					$detailPesanan = new detailPesananController();
+					$detailPesanan = new detailPesanan();
 					$result2 = $detailPesanan->api_addDetailPesanan($_POST);
 					if ($result2) {
 						$response['error'] = 'E50';
 						$response['message'] = 'Proses Sukses';
 
-						$config = new configController();
+						$config = new config();
 						$data = $config->getConfig('fcm_token');
 						$token = $data['value'];
 						pushNotification(
@@ -178,7 +178,7 @@
 			//--getAntrianByUser--
 			case 'get_antrian_by_user'://6
 				$_POST = json_decode($_POST['data'],true);
-				$pesanan = new pesananController();
+				$pesanan = new pesanan();
 				$result = $pesanan->api_getAntrianByUser($_POST);
 				if ($result['empty']) {
 					$response['error'] = 'E61';
@@ -192,7 +192,7 @@
 			//--getAntrianByUser--
 			case 'get_detail_pesanan_by_pesanan'://7
 				$_POST = json_decode($_POST['data'],true);
-				$detail = new detailPesananController();
+				$detail = new detailPesanan();
 				$result = $detail->api_getDetailPesananByPesanan($_POST);
 				if ($result['empty']) {
 					$response['error'] = 'E71';
@@ -205,7 +205,7 @@
 				break;
 			case 'get_history'://8
 				$_POST = json_decode($_POST['data'],true);
-				$pesanan = new pesananController();
+				$pesanan = new pesanan();
 				$result = $pesanan->api_getHistoryByUser($_POST);
 				if ($result['empty']) {
 					$response['error'] = 'E81';
@@ -218,7 +218,7 @@
 				break;
 			case 'cancel':
 				$_POST = json_decode($_POST['data'],true);
-				$pesanan = new pesananController();
+				$pesanan = new pesanan();
 				$result = $pesanan->api_cancel($_POST);
 				if($result){
 					$response['error'] = 'E90';
@@ -230,7 +230,7 @@
 				break;
 			case 'logout':
 				$_POST = json_decode($_POST['data'],true);
-				$pelanggan = new pelangganController();
+				$pelanggan = new pelanggan();
 				$result = $pelanggan->clearToken($_POST);
 				if($result){
 					$response['error'] = 'E100';
@@ -244,7 +244,7 @@
 			case 'request':
 				$_POST = json_decode($_POST['data'],true);
 				isTheseParametersAvailable(array('request_key'));
-				$pelanggan = new pelangganController();
+				$pelanggan = new pelanggan();
 				$result = $pelanggan->getRequest($_POST);
 				if ($result['found']) {
 					$response['error'] = 'E110';
@@ -281,7 +281,7 @@
 			case 'request_forgot':
 				$_POST = json_decode($_POST['data'],true);
 				isTheseParametersAvailable(array('email','username'));
-				$pelanggan = new pelangganController();
+				$pelanggan = new pelanggan();
 				$result = $pelanggan->makeRequest($_POST,'FPW');
 				if ($result) {
 					$response['error'] = 'E120';
@@ -299,7 +299,7 @@
 				case 'change_password':
 					$_POST = json_decode($_POST['data'],true);
 					isTheseParametersAvailable(array('password'));
-					$pelanggan = new pelangganController();
+					$pelanggan = new pelanggan();
 					$result = $pelanggan->changePassword($_POST);
 					if ($result) {
 						$response['error'] = 'E130';

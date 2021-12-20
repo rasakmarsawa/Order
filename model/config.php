@@ -2,7 +2,7 @@
 /**
  *
  */
-class configController
+class config
 {
 
   function __construct(){}

@@ -2,7 +2,7 @@
 /**
  *
  */
-class detailPesananController
+class detailPesanan
 {
 
   function __construct(){}

@@ -2,7 +2,7 @@
 /**
  *
  */
-class topupController
+class topup
 {
   function __construct(){}
 

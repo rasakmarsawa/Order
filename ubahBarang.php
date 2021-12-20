@@ -1,9 +1,9 @@
 <?php
 include 'controller/session.php';
-include 'controller/barangController.php';
+include 'model/barang.php';
 
 $session = new session();
-$barang = new barangController();
+$barang = new barang();
 
 $data = $barang->getBarangById($_GET['id']);
 

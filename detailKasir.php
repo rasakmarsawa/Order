@@ -1,11 +1,11 @@
 <?php
 include 'controller/session.php';
-include 'controller/kasirController.php';
-include 'controller/topupController.php';
+include 'model/kasir.php';
+include 'model/topup.php';
 
 $session = new session();
-$kasir = new kasirController();
-$topup = new topupController();
+$kasir = new kasir();
+$topup = new topup();
 
 if ($session->check()==false) {
   $session->redirect('login.php');
@@ -97,7 +97,7 @@ $data1 = $topup->getTopupByKasir($_GET['id']);
                                           </tfoot>
                                         </table>
                                     </div>
-                                </div>                                  
+                                </div>
                               </div>
                             </div>
                             <!-- /# card -->

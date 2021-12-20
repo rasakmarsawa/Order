@@ -1,8 +1,8 @@
 <?php
 include 'controller/session.php';
-include "controller/kasirController.php";
+include "model/kasir.php";
 
-$user = new kasirController();
+$user = new kasir();
 $session = new session();
 
 if (isset($_POST['submit'])) {

@@ -1,9 +1,9 @@
 <?php
 include 'controller/session.php';
-include 'controller/statusPesananController.php';
+include 'model/statusPesanan.php';
 
 $session = new session();
-$spesanan = new statusPesananController();
+$spesanan = new statusPesanan();
 
 if ($session->check()==false) {
   $session->redirect('login.php');

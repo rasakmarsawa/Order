@@ -1,9 +1,9 @@
 <?php
 include 'controller/session.php';
-include 'controller/kasirController.php';
+include 'model/kasir.php';
 
 $session = new session();
-$kasir = new kasirController();
+$kasir = new kasir();
 
 if (isset($_POST['submit'])) {
   $exception = array("submit");

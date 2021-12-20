@@ -1,14 +1,14 @@
 <?php
 include 'controller/session.php';
-include 'controller/pesananController.php';
-include 'controller/detailPesananController.php';
 include 'controller/notification.php';
-include 'controller/statusPesananController.php';
+include 'model/pesanan.php';
+include 'model/detailPesanan.php';
+include 'model/statusPesanan.php';
 
 $session = new session();
-$pesanan = new pesananController();
-$detail = new detailPesananController();
-$spesanan = new statusPesananController();
+$pesanan = new pesanan();
+$detail = new detailPesanan();
+$spesanan = new statusPesanan();
 
 if ($session->check()==false) {
   $session->redirect('login.php');
