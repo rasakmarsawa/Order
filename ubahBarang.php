@@ -1,35 +1,4 @@
-<?php
-include 'controller/session.php';
-include 'model/barang.php';
-
-$session = new session();
-$barang = new barang();
-
-$data = $barang->getBarangById($_GET['id']);
-
-if (isset($_POST['submit'])) {
-  $_POST['id']=$_GET['id'];
-  if ($session->emptyCheck($_POST,array('submit'))) {
-    $result = $barang->updateBarang($_POST);
-    if ($result) {
-      $session->redirect('detailBarang.php?id='.$_GET['id'].'&update');
-    }else{
-      $session->redirect('ubahBarang.php?id='.$_GET['id'].'&fail');
-    }
-  }else{
-    $session->redirect('ubahBarang.php?id='.$_GET['id'].'&empty');
-  }
-}
-
-if ($session->check()==false) {
-  $session->redirect('login.php');
-}
-
-if ($session->checkAdmin()==false) {
-  $session->redirect('index.php');
-}
-?>
-
+<?php include 'controller/adminController.php' ?>
 <?php include 'include/head.php' ?>
 
     <div class="content-wrap">

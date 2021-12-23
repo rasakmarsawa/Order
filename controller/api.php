@@ -5,12 +5,12 @@
 
 	include 'notification.php';
 	include 'email.php';
-  include './model/pelanggan.php';
-	include './model/barang.php';
-	include './model/pesanan.php';
-	include './model/statusAntrian.php';
-	include './model/detailPesanan.php';
-	include './model/config.php';
+  include '../model/pelanggan.php';
+	include '../model/barang.php';
+	include '../model/pesanan.php';
+	include '../model/statusAntrian.php';
+	include '../model/detailPesanan.php';
+	include '../model/config.php';
 
 	//function validating all the paramters are available
 	//we will pass the required parameters to this function

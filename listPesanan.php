@@ -1,21 +1,4 @@
-<?php
-include 'controller/session.php';
-include 'model/pesanan.php';
-
-$session = new session();
-$pesanan = new pesanan();
-
-if ($session->check()==false) {
-  $session->redirect('login.php');
-}
-
-if ($session->checkAdmin()==false) {
-  $session->redirect('index.php');
-}
-
-$data = $pesanan->getPesanan();
-?>
-
+<?php include 'controller/adminController.php' ?>
 <?php include 'include/head.php' ?>
 
     <div class="content-wrap">

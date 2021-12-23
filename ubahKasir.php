@@ -1,36 +1,4 @@
-<?php
-include 'controller/session.php';
-include 'model/kasir.php';
-
-$session = new session();
-$kasir = new kasir();
-
-$data = $kasir->getKasirById($_GET['id']);
-
-if (isset($_POST['submit'])) {
-  $_POST['username']=$_GET['id'];
-  $exception = array("submit","password");
-  if ($session->emptyCheck($_POST,$exception)) {
-    $result = $kasir->updateKasir($_POST);
-    if ($result) {
-      $session->redirect('detailKasir.php?id='.$_GET['id'].'&update');
-    }else{
-      $session->redirect('ubahKasir.php?id='.$_GET['id'].'&fail');
-    }
-  }else{
-    $session->redirect('ubahKasir.php?id='.$_GET['id'].'&empty');
-  }
-}
-
-if ($session->check()==false) {
-  $session->redirect('login.php');
-}
-
-if ($session->checkAdmin()==false) {
-  $session->redirect('index.php');
-}
-?>
-
+<?php include 'controller/adminController.php' ?>
 <?php include 'include/head.php' ?>
 
     <div class="content-wrap">

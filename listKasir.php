@@ -1,21 +1,4 @@
-<?php
-include 'controller/session.php';
-include 'model/kasir.php';
-
-$session = new session();
-$kasir = new kasir();
-
-if ($session->check()==false) {
-  $session->redirect('login.php');
-}
-
-if ($session->checkAdmin()==false) {
-  $session->redirect('index.php');
-}
-
-$arr = $kasir->getKasir();
-?>
-
+<?php include 'controller/adminController.php'; ?>
 <?php include 'include/head.php' ?>
 
     <div class="content-wrap">

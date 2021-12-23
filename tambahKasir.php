@@ -1,33 +1,4 @@
-<?php
-include 'controller/session.php';
-include 'model/kasir.php';
-
-$session = new session();
-$kasir = new kasir();
-
-if (isset($_POST['submit'])) {
-  $exception = array("submit");
-  if ($session->emptyCheck($_POST,$exception)) {
-    $result = $kasir->addKasir($_POST);
-    if ($result) {
-      $session->redirect('listKasir.php?add');
-    }else{
-      $session->redirect('?fail');
-    }
-  }else{
-    $session->redirect('?empty');
-  }
-}
-
-if ($session->check()==false) {
-  $session->redirect('login.php');
-}
-
-if ($session->checkAdmin()==false) {
-  $session->redirect('index.php');
-}
-?>
-
+<?php include 'controller/adminController.php' ?>
 <?php include 'include/head.php' ?>
 
     <div class="content-wrap">

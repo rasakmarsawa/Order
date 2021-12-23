@@ -1,6 +1,7 @@
 <?php
 include 'controller/session.php';
 include "model/kasir.php";
+include 'controller/clearSession.php';
 
 $user = new kasir();
 $session = new session();
@@ -9,7 +10,11 @@ if (isset($_POST['submit'])) {
   $data = $user->login($_POST['username'],$_POST['password']);
   if($data==false){
     header('Location:?login_fail');
+  }else{
+    $session->redirect('index.php');
   }
+}else{
+    // clearSession();
 }
 
 if ($session->check()==true) {

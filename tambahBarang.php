@@ -1,32 +1,4 @@
-<?php
-include 'controller/session.php';
-include 'model/barang.php';
-
-$session = new session();
-$barang = new barang();
-
-if (isset($_POST['submit'])) {
-  if ($session->emptyCheck($_POST,array('submit'))) {
-    $result = $barang->addBarang(trim($_POST['nama']),$_POST['harga']);
-    if ($result) {
-      $session->redirect('listBarang.php?add');
-    }else{
-      $session->redirect('?fail');
-    }
-  }else {
-    $session->redirect('?empty');
-  }
-}
-
-if ($session->check()==false) {
-  $session->redirect('login.php');
-}
-
-if ($session->checkAdmin()==false) {
-  $session->redirect('index.php');
-}
-?>
-
+<?php include 'controller/adminController.php' ?>
 <?php include 'include/head.php' ?>
 
     <div class="content-wrap">

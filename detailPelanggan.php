@@ -1,48 +1,4 @@
-<?php
-include 'controller/session.php';
-include 'model/pelanggan.php';
-include 'model/topup.php';
-
-$session = new session();
-$pelanggan = new pelanggan();
-$topup = new topup();
-
-if ($session->check()==false) {
-  $session->redirect('login.php');
-}
-
-if ($session->checkAdmin()==true) {
-  $session->redirect('index.php');
-}
-
-if (isset($_POST['submit'])) {
-  if ($session->emptyCheck($_POST,array('submit'))) {
-    if ($_POST['jumlah_topup']>0) {
-      $_POST['id_pelanggan']=$_GET['id'];
-      $_POST['id_kasir']=$_SESSION['username'];
-      $result = $topup->addTopup($_POST);
-
-      if ($result) {
-        $session->redirect('detailPelanggan.php?id='.$_GET['id'].'&&topup');
-      }else{
-        $session->redirect('detailPelanggan.php?id='.$_GET['id'].'&&fail');
-      }
-    }else{
-      $session->redirect('detailPelanggan.php?id='.$_GET['id'].'&&fail');
-    }
-  }else{
-    $session->redirect('detailPelanggan.php?id='.$_GET['id'].'&&empty');
-  }
-}
-
-$data = $pelanggan->getPelangganById($_GET['id']);
-if (empty($data)) {
-  $session->redirect('topup.php?notfound');
-}
-
-$activity = $pelanggan->getActivity($_GET['id']);
-?>
-
+<?php include 'controller/kasirController.php' ?>
 <?php include 'include/head.php' ?>
 
     <div class="content-wrap">

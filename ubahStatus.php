@@ -1,35 +1,4 @@
-<?php
-include 'controller/session.php';
-include 'model/statusPesanan.php';
-
-$session = new session();
-$spesanan = new statusPesanan();
-
-if ($session->check()==false) {
-  $session->redirect('login.php');
-}
-
-if ($session->checkAdmin()==false) {
-  $session->redirect('index.php');
-}
-
-$data = $spesanan->getStatusPesananById($_GET['id']);
-
-if (isset($_POST['submit'])) {
-  $_POST['id_status']=$_GET['id'];
-  if ($session->emptyCheck($_POST,array('submit','message'))) {
-    $result = $spesanan->updateStatusPesanan($_POST);
-    if ($result) {
-      $session->redirect('listStatus.php?update');
-    }else{
-      $session->redirect('ubahStatus.php?id='.$_GET['id'].'&fail');
-    }
-  }else{
-    $session->redirect('ubahStatus.php?id='.$_GET['id'].'&empty');
-  }
-}
-?>
-
+<?php include 'controller/adminController.php' ?>
 <?php include 'include/head.php' ?>
 
     <div class="content-wrap">

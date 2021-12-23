@@ -1,21 +1,4 @@
-<?php
-include 'controller/session.php';
-include 'model/statusPesanan.php';
-
-$session = new session();
-$spesanan = new statusPesanan();
-
-if ($session->check()==false) {
-  $session->redirect('login.php');
-}
-
-if ($session->checkAdmin()==false) {
-  $session->redirect('index.php');
-}
-
-$arr = $spesanan->getStatusPesanan();
-?>
-
+<?php include 'controller/adminController.php' ?>
 <?php include 'include/head.php' ?>
 
     <div class="content-wrap">

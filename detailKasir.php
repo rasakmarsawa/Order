@@ -1,32 +1,4 @@
-<?php
-include 'controller/session.php';
-include 'model/kasir.php';
-include 'model/topup.php';
-
-$session = new session();
-$kasir = new kasir();
-$topup = new topup();
-
-if ($session->check()==false) {
-  $session->redirect('login.php');
-}
-
-if ($session->checkAdmin()==false) {
-  $session->redirect('index.php');
-}
-
-if (isset($_GET['delete'])) {
-  $result = $kasir->deleteKasirById($_GET['delete']);
-  if ($result==true) {
-    $session->redirect('listKasir.php?delete');
-  }
-}
-
-$data = $kasir->getKasirById($_GET['id']);
-$data1 = $topup->getTopupByKasir($_GET['id']);
-
-?>
-
+<?php include 'controller/adminController.php' ?>
 <?php include 'include/head.php' ?>
 
     <div class="content-wrap">

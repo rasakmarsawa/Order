@@ -1,33 +1,4 @@
-<?php
-include 'controller/session.php';
-include 'model/barang.php';
-include 'model/pesanan.php';
-include 'model/detailPesanan.php';
-
-$session = new session();
-$barang = new barang();
-$pesanan = new pesanan();
-$detailPesanan = new detailPesanan();
-
-if ($session->check()==false) {
-  $session->redirect('login.php');
-}
-
-$arr = $barang->getBarang();
-
-if (isset($_POST['submit'])) {
-  $data = $pesanan->addPesananGuess($_POST,$arr);
-  if ($data['dataPesanan']['total_harga']!=0) {
-    $pesanan->api_addPesanan($data['dataPesanan']);
-    $detailPesanan->api_addDetailPesanan($data['dataDetail']);
-
-    $session->redirect('antrian.php');
-  }else{
-    $session->redirect('tambahPesanan.php?empty');
-  }
-}
-?>
-
+<?php include 'controller/kasirController.php' ?>
 <?php include 'include/head.php' ?>
 
     <div class="content-wrap">

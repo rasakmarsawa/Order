@@ -1,21 +1,4 @@
-<?php
-include 'controller/session.php';
-
-$session = new session();
-
-if ($session->check()==false) {
-  $session->redirect('login.php');
-}
-
-if (isset($_POST['submit'])) {
-  $session->redirect('detailPelanggan.php?id='.$_POST['username']);
-}
-
-if ($session->checkAdmin()==true) {
-  $session->redirect('index.php');
-}
-?>
-
+<?php include 'controller/kasirController.php' ?>
 <?php include 'include/head.php' ?>
 
     <div class="content-wrap">

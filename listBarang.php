@@ -1,21 +1,4 @@
-<?php
-include 'controller/session.php';
-include 'model/barang.php';
-
-$session = new session();
-$barang = new barang();
-
-if ($session->check()==false) {
-  $session->redirect('login.php');
-}
-
-if ($session->checkAdmin()==false) {
-  $session->redirect('index.php');
-}
-
-$arr = $barang->getBarang();
-?>
-
+<?php include 'controller/adminController.php' ?>
 <?php include 'include/head.php' ?>
 
     <div class="content-wrap">
