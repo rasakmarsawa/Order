@@ -55,7 +55,7 @@ if ($session->check()==true) {
                           <span>Trisha</span>
                         </div>
                         <div class="login-form">
-                              <h4>Login Kasir</h4>
+                              <h4>Login</h4>
                               <hr>
                             <?php if (isset($_GET['login_fail'])): ?>
                               <div class="alert alert-danger">

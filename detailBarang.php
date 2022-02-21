@@ -22,15 +22,20 @@
                                 </div>
                               <?php endif; ?>
                               <div class="card-subtitle">
-                                <p class="tab">
-                                Nama Barang : <?php echo $data['nama_barang'] ?> <br>
-                                Harga : Rp. <?php echo $data['harga'] ?>,-
-                                </p>
-                                <div class="float-right">
-                                  <a type="button" class="btn btn-danger mr-1" href="?delete=<?php echo $data['id_barang'] ?>">Hapus</a>
+                                <div>
+                                  <p class="tab">
+                                  Nama Barang : <?php echo $data['nama_barang'] ?> <br>
+                                  Harga : Rp. <?php echo $data['harga'] ?>,-
+                                  </p>
+                                  <img src="uploads/<?php echo $data['id_barang'] ?>.<?php echo $data['type'] ?>" width="150" height="150">
                                 </div>
-                                <div class="float-right">
-                                  <a type="button" class="btn btn-primary mr-1" href="ubahBarang.php?id=<?php echo $data['id_barang'] ?>">Ubah</a>
+                                <div>
+                                  <div class="float-right">
+                                    <a type="button" class="btn btn-danger mr-1" href="?delete=<?php echo $data['id_barang'] ?>&&type=<?php echo $data['type'] ?>">Hapus</a>
+                                  </div>
+                                  <div class="float-right">
+                                    <a type="button" class="btn btn-primary mr-1" href="ubahBarang.php?id=<?php echo $data['id_barang'] ?>">Ubah</a>
+                                  </div>
                                 </div>
                               </div>
                                 <!-- <div class="card-body">

@@ -32,7 +32,7 @@
                                 <?php endif; ?>
                                 <div class="card-body">
                                     <div class="basic-form">
-                                        <form method="post">
+                                        <form method="post" enctype="multipart/form-data">
                                             <div class="form-group">
                                                 <label>Nama Barang</label>
                                                 <input name="nama_barang" type="nama" class="form-control" placeholder="Nama Barang" maxlength="50" value="<?php echo $data['nama_barang'] ?>">
@@ -40,6 +40,10 @@
                                             <div class="form-group">
                                                 <label>Harga</label>
                                                 <input name="harga" type="harga" class="form-control" placeholder="Harga" maxlength="11" value="<?php echo $data['harga'] ?>">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Foto</label>
+                                                <input name="foto" type="file" class="form-control">
                                             </div>
                                             <button name="submit" type="submit" class="btn btn-primary">Submit</button>
                                         </form>

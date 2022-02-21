@@ -9,8 +9,8 @@ class barang
 
   }
 
-  function addBarang($nama,$harga){
-    $sql = "insert into barang (nama_barang,harga) values ('".$nama."',".$harga.")";
+  function addBarang($nama,$harga,$type){
+    $sql = "insert into barang (nama_barang,harga,type) values ('".$nama."',".$harga.",'".$type."')";
     $result = $GLOBALS['mysqli']->query($sql);
 
     return $result;
@@ -51,7 +51,12 @@ class barang
   }
 
   function updateBarang($post){
-    $sql = "update barang set nama_barang='".$post['nama_barang']."' , harga=".$post['harga']." where id_barang=".$post['id'];
+
+    $sql = "update barang set nama_barang='".$post['nama_barang']."' , harga=".$post['harga'];
+    if ($post['type']!=NULL) {
+      $sql .= ", type = '".$post['type']."'";
+    }
+    $sql .= " where id_barang=".$post['id'];
     $result = $GLOBALS['mysqli']->query($sql);
 
     return $result;
@@ -84,6 +89,19 @@ class barang
     }
 
     return $result;
+  }
+
+  function getLastId(){
+    $sql = "select * from barang where id_barang = (select max(id_barang) from barang)";
+    $result = $GLOBALS['mysqli']->query($sql);
+
+    if (mysqli_num_rows($result)==1) {
+      $data = mysqli_fetch_assoc($result);
+    }else{
+      $data = null;
+    }
+
+    return $data;
   }
 }
 

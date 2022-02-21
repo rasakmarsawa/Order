@@ -22,6 +22,14 @@
                                     Tambah data tidak berhasil.
                                   </div>
                                 <?php endif; ?>
+                                <?php if (isset($_GET['imgfail'])): ?>
+                                  <div class="alert alert-danger alert-dismissible fade show">
+                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                  </button>
+                                    <?php echo $_GET['imgfail'] ?>
+                                  </div>
+                                <?php endif; ?>
                                 <?php if (isset($_GET['empty'])): ?>
                                   <div class="alert alert-danger alert-dismissible fade show">
                                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -32,7 +40,7 @@
                                 <?php endif; ?>
                                 <div class="card-body">
                                     <div class="basic-form">
-                                        <form method="post">
+                                        <form method="post" enctype="multipart/form-data">
                                             <div class="form-group">
                                                 <label>Nama Barang</label>
                                                 <input name="nama" type="nama" class="form-control" placeholder="Nama Barang" maxlength="50">
@@ -40,6 +48,10 @@
                                             <div class="form-group">
                                                 <label>Harga</label>
                                                 <input name="harga" type="harga" class="form-control" placeholder="Harga" maxlength="11">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Foto</label>
+                                                <input name="foto" type="file" class="form-control">
                                             </div>
                                             <button name="submit" type="submit" class="btn btn-primary">Submit</button>
                                         </form>

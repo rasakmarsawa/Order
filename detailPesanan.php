@@ -39,6 +39,26 @@ if (isset($_POST['submit'])) {
     $session->redirect('detailPesanan.php?tanggal='.$_GET['tanggal'].'&&no='.$_GET['no'].'&&Nextfail');
   }
 }
+
+if (isset($_POST['cancel'])){
+  if ($pesanan->api_cancel($_GET)) {
+    $data0['status'] = 5;
+    $data0['nama_status'] = "Dibatalkan";
+    $data0['message'] = "Pesananmu dibatalkan, ".$_POST['reason'];
+
+    pushNotification(
+      1,
+      $data0['fcm_token'],
+      'Pesananmu dibatalkan',
+      $data0['message'],
+      1,
+      $data0,
+      "DetailActivity"
+    );
+
+    $session->redirect('detailPesanan.php?tanggal='.$_GET['tanggal'].'&&no='.$_GET['no']);
+  }
+}
 ?>
 
 <?php include 'include/head.php' ?>
@@ -100,6 +120,9 @@ if (isset($_POST['submit'])) {
                                             } ?>
                                           </button>
                                         <?php endif; ?>
+                                        <?php if ($data0['status']==1 && $_SESSION['admin']!=1): ?>
+                                          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#basicModal">Batalkan</button>
+                                        <?php endif; ?>
                                       </div>
                                     </center>
                                   </form>
@@ -146,5 +169,27 @@ if (isset($_POST['submit'])) {
             </div>
         </div>
     </div>
-
+<div class="bootstrap-modal">
+    <div class="modal fade" id="basicModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Batalkan Pesanan</h5>
+                </div>
+                <form method="post">
+                  <div class="modal-body">
+                    <div class="form-group">
+                        <label>Alasan dibatalkan</label>
+                        <input name="reason" type="text" class="form-control" placeholder="Alasan dibatalkan" maxlength="100" autocomplete="off">
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="submit" name="cancel" class="btn btn-danger">Batalkan</button>
+                  </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <?php include 'include/foot.php' ?>

@@ -1,5 +1,6 @@
 <?php
 include 'controller/session.php';
+include 'controller/imageUpload.php';
 include 'model/barang.php';
 include 'model/kasir.php';
 include 'model/topup.php';
@@ -12,6 +13,7 @@ $kasir = new kasir();
 $topup = new topup();
 $pesanan = new pesanan();
 $spesanan = new statusPesanan();
+$imgup = new imageUpload();
 
 //check user log in
 if ($session->check()==false) {
@@ -37,16 +39,25 @@ switch ($filename) {
 
   case 'tambahBarang':
     if (isset($_POST['submit'])) {
-      if ($session->emptyCheck($_POST,array('submit'))) {
-        $result = $barang->addBarang(trim($_POST['nama']),$_POST['harga']);
-        if ($result) {
-          $session->redirect('listBarang.php?add');
-        }else{
-          $session->redirect('?fail');
+      $result = $imgup->checkImage($_FILES);
+      if ($result['status']==1) {
+        if ($session->emptyCheck($_POST,array('submit'))) {
+          $result2 = $barang->addBarang(trim($_POST['nama']),$_POST['harga'],$result['type']);
+          if ($result2) {
+            $id = $barang->getLastId();
+            $imgup->upload($_FILES, "uploads/".$id['id_barang'].".".$id['type']);
+            $session->redirect('listBarang.php?add');
+          }else{
+            $session->redirect('?fail');
+          }
+        }else {
+          $session->redirect('?empty');
         }
-      }else {
-        $session->redirect('?empty');
+      }else{
+        $session->redirect('?imgfail='.$result['message']);
       }
+
+
     }
     break;
 
@@ -54,12 +65,13 @@ switch ($filename) {
     if (isset($_GET['delete'])) {
       $result = $barang->deleteBarangById($_GET['delete']);
       if ($result==true) {
+        $filename = $_GET['delete'].".".$_GET['type'];
+        $imgup->delete($filename);
         $session->redirect('listBarang.php?delete');
       }
     }
 
     $data = $barang->getBarangById($_GET['id']);
-    $detail = $barang->getDetailBarang($_GET['id']);
     break;
 
   case 'ubahBarang':
@@ -67,15 +79,40 @@ switch ($filename) {
 
     if (isset($_POST['submit'])) {
       $_POST['id']=$_GET['id'];
-      if ($session->emptyCheck($_POST,array('submit'))) {
-        $result = $barang->updateBarang($_POST);
-        if ($result) {
-          $session->redirect('detailBarang.php?id='.$_GET['id'].'&update');
-        }else{
-          $session->redirect('ubahBarang.php?id='.$_GET['id'].'&fail');
+      $filename = $_FILES['foto']['name'];
+      $filecheck = true;
+      $result = null;
+
+      if ($filename!='') {
+        $type = $imgup->getType($filename);
+        $_POST['old_type'] = $data['type'];
+        $_POST['type'] = $type;
+        $result = $imgup->checkImage($_FILES);
+        if ($result['status']==0) {
+          $filecheck = false;
         }
       }else{
-        $session->redirect('ubahBarang.php?id='.$_GET['id'].'&empty');
+        $_POST['type'] = NULL;
+      }
+
+      if ($filecheck==true) {
+        if ($session->emptyCheck($_POST,array('submit','foto','old_type'))) {
+          $old_filename = $_POST['id'].".".$_POST['old_type'];
+          $imgup->delete($old_filename);
+
+          $new_filename = $_POST['id'].".".$_POST['type'];
+          $imgup->upload($_FILES, 'uploads/'.$new_filename);
+          $result = $barang->updateBarang($_POST);
+          if ($result) {
+            $session->redirect('detailBarang.php?id='.$_GET['id'].'&update');
+          }else{
+            $session->redirect('ubahBarang.php?id='.$_GET['id'].'&fail');
+          }
+        }else{
+          $session->redirect('ubahBarang.php?id='.$_GET['id'].'&empty');
+        }
+      }else{
+        $session->redirect('ubahBarang.php?id='.$_GET['id'].'&failcheck='.$result['message']);
       }
     }
     break;
@@ -158,7 +195,7 @@ switch ($filename) {
     break;
 
   default:
-    echo "page {$filename} not found";
+    // echo "page {$filename} not found";
     break;
 }
 ?>
